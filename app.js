@@ -274,24 +274,34 @@ const PISTON_API_URLS = [
   "https://piston-api.vercel.app/api/v2/execute"
 ];
 
+const BACKEND_URLS = [
+  'https://oops-compiler.onrender.com/execute',
+  'http://localhost:3000/execute'
+];
+
 async function executeJavaCode(sourceCode, stdin) {
   const payload = {
     files: [{ name: "Main.java", content: sourceCode }],
     stdin: stdin || ""
   };
 
-  try {
-    const response = await fetch('http://localhost:3000/execute', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    
-    if (!response.ok) throw new Error(`Server Error: ${response.status}`);
-    return await response.json();
-  } catch (err) {
-    throw new Error('Failed to connect to local compiler server. Is server.js running?');
+  let lastError = null;
+  for (const url of BACKEND_URLS) {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      if (!response.ok) throw new Error(`Server Error: ${response.status}`);
+      return await response.json();
+    } catch (err) {
+      lastError = err;
+    }
   }
+
+  throw new Error('Failed to connect to compiler server (tried Render & localhost). Please make sure the server is awake and running.');
 }
 
 
