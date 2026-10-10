@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Specialized Java OOPS Compiler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header id="app-header">
+    <div class="header-left">
+      <h2>Specialized Java OOPS Compiler</h2>
+    </div>
+    <div class="header-right">
+      <div class="status-indicator" id="status-indicator">
+        <span class="status-text">Ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <main id="app-main">
+
+    <!-- Left Panel: Questions -->
+    <aside id="sidebar" class="panel">
+      <div class="panel-header">
+        <span>Questions</span>
+      </div>
+      <div class="template-list" id="template-list"></div>
+      <div class="question-display" id="question-display">
+        <p class="question-placeholder">Select a question</p>
+      </div>
+    </aside>
+
+    <div class="gutter gutter-horizontal" id="gutter-h"></div>
+
+    <!-- Right Panel: Editor + IO -->
+    <div id="right-pane">
+      
+      <!-- Top: Editor -->
+      <section id="editor-section" class="panel">
+        <div class="panel-header">
+          <div class="panel-header-left">
+            <span>Main.java</span>
+          </div>
+          <div class="panel-header-right">
+            <button class="btn btn-icon" id="btn-reset" title="Reset Code">Reset</button>
+            <button class="btn btn-icon" id="btn-format" title="Format Code">Format</button>
+            <button class="btn btn-run" id="btn-run" title="Run Code (Ctrl+Enter)">Run</button>
+          </div>
+        </div>
+        <div id="monaco-editor"></div>
+      </section>
+
+      <div class="gutter gutter-vertical" id="gutter-v"></div>
+
+      <!-- Bottom: IO Footer -->
+      <section id="io-section" class="panel">
+        
+        <!-- Input -->
+        <div class="io-block">
+          <div class="panel-header">
+            <span>Input (stdin)</span>
+          </div>
+          <textarea id="stdin-input" class="io-textarea" placeholder="Enter input here..." spellcheck="false"></textarea>
+        </div>
+
+        <!-- Output -->
+        <div class="io-block">
+          <div class="panel-header">
+            <span>Output</span>
+            <button class="btn btn-icon btn-small" id="btn-clear-output" title="Clear Output">Clear</button>
+          </div>
+          <div id="output-display" class="io-output-text">
+            <span class="output-placeholder">Output will appear here...</span>
+          </div>
+        </div>
+
+        <!-- Expected -->
+        <div class="io-block">
+          <div class="panel-header">
+            <span>Expected Output</span>
+            <span class="match-badge" id="match-badge"></span>
+          </div>
+          <textarea id="expected-output" class="io-textarea" placeholder="Paste expected output here..." spellcheck="false"></textarea>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer id="app-footer">
+    <div class="footer-left">
+      <span class="exec-info" id="exec-info"></span>
+    </div>
+    <div class="footer-right">
+      <span>Java 15 • Local Execution</span>
+      <span class="separator">|</span>
+      <span>Ctrl+Enter to Run</span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
