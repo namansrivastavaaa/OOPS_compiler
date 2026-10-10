@@ -22,7 +22,14 @@
       <span style="font-size: 0.85rem; margin-left: 1rem; opacity: 0.8;">Note: Run
         <code>node F:\OOPS_compiler\Backend\server.js</code> in cmd before if locally</span>
     </div>
-    <div class="header-right">
+    <div class="header-right" style="display: flex; align-items: center; gap: 12px;">
+      <label for="env-selector" style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 6px;">
+        Server:
+        <select id="env-selector" style="background: var(--bg-panel); color: var(--text-primary); border: 1px solid var(--border-color); padding: 4px 8px; border-radius: 4px; font-size: 0.85rem; cursor: pointer;">
+          <option value="local">Local (localhost:3000)</option>
+          <option value="cloud">Cloud (Render)</option>
+        </select>
+      </label>
       <div class="status-indicator" id="status-indicator">
         <span class="status-text">Ready</span>
       </div>

@@ -274,39 +274,41 @@ const PISTON_API_URLS = [
   "https://piston-api.vercel.app/api/v2/execute"
 ];
 
-const BACKEND_URLS = [
-  'https://oops-compiler.onrender.com/execute',
-  'http://localhost:3000/execute'
-];
+const ENDPOINTS = {
+  local: 'http://localhost:3000/execute',
+  cloud: 'https://oops-compiler.onrender.com/execute'
+};
+
+// ---- DOM Elements ----
+const envSelector = document.getElementById("env-selector");
+const templateListEl = document.getElementById("template-list");
 
 async function executeJavaCode(sourceCode, stdin) {
+  const selectedEnv = envSelector ? envSelector.value : 'local';
+  const url = ENDPOINTS[selectedEnv] || ENDPOINTS.local;
+
   const payload = {
     files: [{ name: "Main.java", content: sourceCode }],
     stdin: stdin || ""
   };
 
-  let lastError = null;
-  for (const url of BACKEND_URLS) {
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      
-      if (!response.ok) throw new Error(`Server Error: ${response.status}`);
-      return await response.json();
-    } catch (err) {
-      lastError = err;
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    
+    if (!response.ok) throw new Error(`Server Error: ${response.status}`);
+    return await response.json();
+  } catch (err) {
+    if (selectedEnv === 'cloud') {
+      throw new Error('Failed to connect to Render Cloud Server. Note: Render free tier takes ~30-60s to wake up on cold starts.');
+    } else {
+      throw new Error('Failed to connect to Local Server (http://localhost:3000). Did you start `node Backend/server.js`?');
     }
   }
-
-  throw new Error('Failed to connect to compiler server (tried Render & localhost). Please make sure the server is awake and running.');
 }
-
-
-// ---- DOM Elements ----
-const templateListEl = document.getElementById("template-list");
 const questionDisplayEl = document.getElementById("question-display");
 const stdinInput = document.getElementById("stdin-input");
 const outputDisplay = document.getElementById("output-display");
