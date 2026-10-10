@@ -30,10 +30,18 @@ app.post('/execute', (req, res) => {
     const compile = spawn('javac', ['Main.java'], { cwd: workDir });
     
     let compileError = '';
+    
+    compile.on('error', (err) => {
+        fs.rmSync(workDir, { recursive: true, force: true });
+        return res.json({
+            compile: { code: 1, stderr: `Failed to start compiler. Is Java (JDK) installed? Error: ${err.message}` }
+        });
+    });
+
     compile.stderr.on('data', data => compileError += data.toString());
     
     compile.on('close', code => {
-        if (code !== 0) {
+        if (code !== 0 && !res.headersSent) {
             fs.rmSync(workDir, { recursive: true, force: true });
             return res.json({
                 compile: { code, stderr: compileError }
@@ -46,6 +54,15 @@ app.post('/execute', (req, res) => {
         let runOutput = '';
         let runError = '';
         
+        run.on('error', (err) => {
+            fs.rmSync(workDir, { recursive: true, force: true });
+            if (!res.headersSent) {
+                return res.json({
+                    run: { code: 1, output: '', stderr: `Failed to start Java runtime. Error: ${err.message}` }
+                });
+            }
+        });
+
         if (stdin) {
             run.stdin.write(stdin);
             run.stdin.end();
@@ -55,6 +72,7 @@ app.post('/execute', (req, res) => {
         run.stderr.on('data', data => runError += data.toString());
         
         run.on('close', code => {
+            if (res.headersSent) return;
             fs.rmSync(workDir, { recursive: true, force: true });
             res.json({
                 run: { code, output: runOutput, stderr: runError }
