@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Specialized Java OOPS Compiler</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="index.css" />
 </head>
+
 <body>
 
   <!-- Header -->
   <header id="app-header">
     <div class="header-left">
       <h2>Specialized Java OOPS Compiler</h2>
+      <span style="font-size: 0.85rem; margin-left: 1rem; opacity: 0.8;">Note: Run
+        <code>node F:\OOPS_compiler\Backend\server.js</code> in cmd before</span>
     </div>
     <div class="header-right">
       <div class="status-indicator" id="status-indicator">
@@ -41,7 +47,7 @@
 
     <!-- Right Panel: Editor + IO -->
     <div id="right-pane">
-      
+
       <!-- Top: Editor -->
       <section id="editor-section" class="panel">
         <div class="panel-header">
@@ -61,13 +67,14 @@
 
       <!-- Bottom: IO Footer -->
       <section id="io-section" class="panel">
-        
+
         <!-- Input -->
         <div class="io-block">
           <div class="panel-header">
             <span>Input (stdin)</span>
           </div>
-          <textarea id="stdin-input" class="io-textarea" placeholder="Enter input here..." spellcheck="false"></textarea>
+          <textarea id="stdin-input" class="io-textarea" placeholder="Enter input here..."
+            spellcheck="false"></textarea>
         </div>
 
         <!-- Output -->
@@ -87,7 +94,8 @@
             <span>Expected Output</span>
             <span class="match-badge" id="match-badge"></span>
           </div>
-          <textarea id="expected-output" class="io-textarea" placeholder="Paste expected output here..." spellcheck="false"></textarea>
+          <textarea id="expected-output" class="io-textarea" placeholder="Paste expected output here..."
+            spellcheck="false"></textarea>
         </div>
 
       </section>
@@ -109,4 +117,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
