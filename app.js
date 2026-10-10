@@ -328,8 +328,8 @@ function initMonaco() {
       language: "java",
       theme: "vs-dark",
       fontFamily: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace",
-      fontSize: 13.5,
-      lineHeight: 22,
+      fontSize: 15,
+      lineHeight: 24,
       fontLigatures: true,
       minimap: { enabled: false },
       scrollBeyondLastLine: false,
@@ -570,3 +570,61 @@ document.addEventListener("keydown", (e) => {
 // ---- Initialize ----
 renderTemplateList();
 initMonaco();
+
+// ---- Layout Resizers ----
+const sidebar = document.getElementById("sidebar");
+const rightPane = document.getElementById("right-pane");
+const gutterH = document.getElementById("gutter-h");
+
+const editorSection = document.getElementById("editor-section");
+const ioSection = document.getElementById("io-section");
+const gutterV = document.getElementById("gutter-v");
+
+// Horizontal resizing
+let isResizingH = false;
+gutterH.addEventListener("mousedown", (e) => {
+  isResizingH = true;
+  document.body.style.cursor = "col-resize";
+  gutterH.classList.add("active");
+});
+
+// Vertical resizing
+let isResizingV = false;
+gutterV.addEventListener("mousedown", (e) => {
+  isResizingV = true;
+  document.body.style.cursor = "row-resize";
+  gutterV.classList.add("active");
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (isResizingH) {
+    const totalWidth = document.getElementById("app-main").clientWidth;
+    const newWidth = (e.clientX / totalWidth) * 100;
+    if (newWidth > 15 && newWidth < 85) {
+      sidebar.style.width = `${newWidth}%`;
+    }
+  } else if (isResizingV) {
+    const container = document.getElementById("right-pane");
+    const containerRect = container.getBoundingClientRect();
+    const newHeight = containerRect.bottom - e.clientY;
+    const totalHeight = containerRect.height;
+    const heightPercent = (newHeight / totalHeight) * 100;
+    if (heightPercent > 10 && heightPercent < 80) {
+      ioSection.style.height = `${heightPercent}%`;
+    }
+  }
+});
+
+document.addEventListener("mouseup", () => {
+  if (isResizingH || isResizingV) {
+    isResizingH = false;
+    isResizingV = false;
+    document.body.style.cursor = "default";
+    gutterH.classList.remove("active");
+    gutterV.classList.remove("active");
+    if (monacoEditor) {
+      // Trigger a resize on Monaco so it fills the new container size
+      monacoEditor.layout();
+    }
+  }
+});
