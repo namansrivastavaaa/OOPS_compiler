@@ -19,16 +19,26 @@
   <header id="app-header">
     <div class="header-left" style="display: flex; align-items: center;">
       <h2 style="margin: 0;">Specialized Java OOPS Compiler</h2>
-      <button id="btn-run-locally-help" class="btn" style="margin-left: 1rem; font-size: 0.85rem; background: linear-gradient(135deg, #ff7e5f, #feb47b); color: #fff; border: none; font-weight: 600; padding: 6px 12px; border-radius: 6px; box-shadow: 0 4px 15px rgba(255, 126, 95, 0.4); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 126, 95, 0.6)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 126, 95, 0.4)';">How to Run Locally</button>
+      <button id="btn-run-locally-help" class="btn"
+        style="margin-left: 1rem; font-size: 0.85rem; background: linear-gradient(135deg, #ff7e5f, #feb47b); color: #fff; border: none; font-weight: 600; padding: 6px 12px; border-radius: 6px; box-shadow: 0 4px 15px rgba(255, 126, 95, 0.4); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;"
+        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(255, 126, 95, 0.6)';"
+        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(255, 126, 95, 0.4)';">How
+        to Run Locally</button>
     </div>
     <div class="header-right" style="display: flex; align-items: center; gap: 12px;">
-      <div style="font-size: 0.85rem; color: #4daafc; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
+      <div
+        style="font-size: 0.85rem; color: #4daafc; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
         Server:
-        <div id="env-selector" style="display: flex; background: rgba(77, 170, 252, 0.1); border: 1px solid #4daafc; border-radius: 6px; overflow: hidden; box-shadow: 0 0 10px rgba(77, 170, 252, 0.3);">
-          <button data-value="local" class="env-toggle-btn active" style="background: #4daafc; color: #fff; border: none; padding: 4px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; outline: none; transition: all 0.3s ease;">Local</button>
-          <button data-value="cloud" class="env-toggle-btn" style="background: transparent; color: #aaa; border: none; padding: 4px 12px; font-size: 0.85rem; font-weight: 500; cursor: pointer; outline: none; transition: all 0.3s ease;">Cloud</button>
+        <div id="env-selector"
+          style="display: flex; background: rgba(77, 170, 252, 0.1); border: 1px solid #4daafc; border-radius: 6px; overflow: hidden; box-shadow: 0 0 10px rgba(77, 170, 252, 0.3);">
+          <button data-value="local" class="env-toggle-btn active"
+            style="background: #4daafc; color: #fff; border: none; padding: 4px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; outline: none; transition: all 0.3s ease;">Local</button>
+          <button data-value="cloud" class="env-toggle-btn"
+            style="background: transparent; color: #aaa; border: none; padding: 4px 12px; font-size: 0.85rem; font-weight: 500; cursor: pointer; outline: none; transition: all 0.3s ease;">Cloud</button>
         </div>
-        <span style="font-size: 0.7rem; color: #ffb86c; font-weight: 500; text-transform: none; letter-spacing: 0;">(Cloud takes 50s+ to start)</span>
+        <span
+          style="font-size: 0.7rem; color: #ffb86c; font-weight: 500; text-transform: none; letter-spacing: 0;">(Cloud
+          takes 50 seconds to start)</span>
       </div>
       <div class="status-indicator" id="status-indicator">
         <span class="status-text">Ready</span>
@@ -121,12 +131,15 @@
     </div>
   </footer>
 
-  <dialog id="run-locally-modal" style="padding: 24px; border-radius: 8px; border: 1px solid var(--border-color, #444); max-width: 500px; background: var(--bg-panel, #1e1e1e); color: var(--text-primary, #fff);">
+  <dialog id="run-locally-modal"
+    style="padding: 24px; border-radius: 8px; border: 1px solid var(--border-color, #444); max-width: 500px; background: var(--bg-panel, #1e1e1e); color: var(--text-primary, #fff);">
     <h3 style="margin-top: 0; margin-bottom: 16px;">How to Run Locally</h3>
     <p>To execute code locally without relying on the cloud, you need to run the backend server on your machine.</p>
     <ol style="line-height: 1.6;">
-      <li><a href="Backend/server.js" download="server.js" style="color: #4daafc; text-decoration: none;">Download server.js</a>.</li>
-      <li>Make sure you have <a href="https://nodejs.org/" target="_blank" style="color: #4daafc; text-decoration: none;">Node.js</a> installed.</li>
+      <li><a href="Backend/server.js" download="server.js" style="color: #4daafc; text-decoration: none;">Download
+          server.js</a>.</li>
+      <li>Make sure you have <a href="https://nodejs.org/" target="_blank"
+          style="color: #4daafc; text-decoration: none;">Node.js</a> installed.</li>
       <li>Ensure you have Java installed (<code>javac</code> and <code>java</code> available in your PATH).</li>
       <li>Open your terminal in the folder containing <code>server.js</code>.</li>
       <li>Run <code>npm install express cors</code></li>
@@ -140,7 +153,7 @@
 
   <script>
     const runLocallyBtn = document.getElementById('btn-run-locally-help');
-    
+
     // Environment selector logic
     const envSelectorEl = document.getElementById('env-selector');
     const envBtns = document.querySelectorAll('.env-toggle-btn');
