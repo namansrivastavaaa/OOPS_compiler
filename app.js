@@ -29,8 +29,15 @@ const QUESTIONS = [
   <li>Return the sorted array</li>
   <li>If no player matches, return null</li>
 </ul>
+<p><strong>Input Notes:</strong></p>
+<ul>
+  <li>In first line, take number of objects (n) to be taken as input.</li>
+  <li>From second line onwards, program should take id, name, runs, playerType, and matchType.</li>
+  <li>In the last two lines, take playerType and matchType for search.</li>
+</ul>
 <div class="sample-label">Sample Input</div>
-<div class="sample-block">1
+<div class="sample-block">4
+1
 Virat
 12000
 Batsman
@@ -59,7 +66,8 @@ Players in ODI sorted by id desc:
 3 Bumrah
 1 Virat</div>`,
     code: "",
-    stdin: `1
+    stdin: `4
+1
 Virat
 12000
 Batsman
@@ -112,8 +120,15 @@ Players in ODI sorted by id desc:
   <li>Return the sorted array</li>
   <li>If no match is found, return null</li>
 </ul>
+<p><strong>Input Notes:</strong></p>
+<ul>
+  <li>In first line, take number of objects (n) to be taken as input.</li>
+  <li>From second line onwards, program should take id, brand, osType, price, and rating.</li>
+  <li>In the last two lines, take brand and osType for search.</li>
+</ul>
 <div class="sample-label">Sample Input</div>
-<div class="sample-block">1
+<div class="sample-block">4
+1
 Dell
 Windows
 55000
@@ -141,7 +156,8 @@ Laptops with OS Windows sorted by id desc:
 2 HP
 1 Dell</div>`,
     code: "",
-    stdin: `1
+    stdin: `4
+1
 Dell
 Windows
 55000
@@ -193,8 +209,15 @@ Laptops with OS Windows sorted by id desc:
   <li>Return the second hotel in the sorted list</li>
   <li>If no matching hotel exists, return null</li>
 </ul>
+<p><strong>Input Notes:</strong></p>
+<ul>
+  <li>In first line, take number of objects (n) to be taken as input.</li>
+  <li>From second line onwards, program should take id, name, date, rooms, wifi, and bill.</li>
+  <li>In the last two lines, take month and wifi option for search.</li>
+</ul>
 <div class="sample-label">Sample Input</div>
-<div class="sample-block">101
+<div class="sample-block">4
+101
 Royal Stay
 12-05-2024
 3
@@ -225,7 +248,8 @@ Free</div>
 Second hotel with WiFi option Free by bill amount descending:
 104 Sunset Hotel</div>`,
     code: "",
-    stdin: `101
+    stdin: `4
+101
 Royal Stay
 12-05-2024
 3
@@ -280,8 +304,15 @@ Second hotel with WiFi option Free by bill amount descending:
   <li>Return the sorted array</li>
   <li>If no movie matches, return null</li>
 </ul>
+<p><strong>Input Notes:</strong></p>
+<ul>
+  <li>In first line, take number of objects (n) to be taken as input.</li>
+  <li>From second line onwards, program should take id, title, genre, rating, and language.</li>
+  <li>In the last two lines, take genre and language for search.</li>
+</ul>
 <div class="sample-label">Sample Input</div>
-<div class="sample-block">1
+<div class="sample-block">4
+1
 Inception
 Sci-Fi
 8.8
@@ -309,7 +340,8 @@ Movies in English sorted by rating desc:
 1 Inception 8.8
 2 Interstellar 8.6</div>`,
     code: "",
-    stdin: `1
+    stdin: `4
+1
 Inception
 Sci-Fi
 8.8
@@ -361,8 +393,15 @@ Movies in English sorted by rating desc:
   <li>Return the sorted array</li>
   <li>If no policy matches, return null</li>
 </ul>
+<p><strong>Input Notes:</strong></p>
+<ul>
+  <li>In first line, take number of objects (n) to be taken as input.</li>
+  <li>From second line onwards, program should take id, customerName, planType, premium, and tenure.</li>
+  <li>In the last two lines, take planType and minimum tenure for search.</li>
+</ul>
 <div class="sample-label">Sample Input</div>
-<div class="sample-block">1
+<div class="sample-block">4
+1
 Alice
 Gold
 15000
@@ -391,7 +430,8 @@ Policies with tenure >= 4 sorted by premium asc:
 1 Alice 15000.0
 4 Diana 25000.0</div>`,
     code: "",
-    stdin: `1
+    stdin: `4
+1
 Alice
 Gold
 15000
@@ -824,9 +864,16 @@ function loadQuestion(id) {
 
   // Determine stdin to load
   let savedStdin = getSavedStdin(id);
-  if (savedStdin && q.stdin && savedStdin.split("\n").length <= 6 && q.stdin.split("\n").length > 10) {
-    savedStdin = null;
-    saveStdin(id, q.stdin);
+  if (savedStdin && q.stdin) {
+    const savedFirst = savedStdin.trim().split("\n")[0].trim();
+    const qFirst = q.stdin.trim().split("\n")[0].trim();
+    if (savedFirst !== qFirst && (qFirst === "4" || qFirst === "3")) {
+      savedStdin = null;
+      saveStdin(id, q.stdin);
+    } else if (savedStdin.split("\n").length <= 6 && q.stdin.split("\n").length > 10) {
+      savedStdin = null;
+      saveStdin(id, q.stdin);
+    }
   }
   stdinInput.value = savedStdin !== null ? savedStdin : (q.stdin || "");
 
