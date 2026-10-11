@@ -30,10 +30,26 @@ const QUESTIONS = [
   <li>If no player matches, return null</li>
 </ul>
 <div class="sample-label">Sample Input</div>
-<div class="sample-block">1 Virat 12000 Batsman ODI
-2 Rohit 9500 Batsman T20
-3 Bumrah 200 Bowler ODI
-4 Jadeja 2500 Batsman ODI
+<div class="sample-block">1
+Virat
+12000
+Batsman
+ODI
+2
+Rohit
+9500
+Batsman
+T20
+3
+Bumrah
+200
+Bowler
+ODI
+4
+Jadeja
+2500
+Batsman
+ODI
 Batsman
 ODI</div>
 <div class="sample-label">Sample Output</div>
@@ -43,10 +59,26 @@ Players in ODI sorted by id desc:
 3 Bumrah
 1 Virat</div>`,
     code: "",
-    stdin: `1 Virat 12000 Batsman ODI
-2 Rohit 9500 Batsman T20
-3 Bumrah 200 Bowler ODI
-4 Jadeja 2500 Batsman ODI
+    stdin: `1
+Virat
+12000
+Batsman
+ODI
+2
+Rohit
+9500
+Batsman
+T20
+3
+Bumrah
+200
+Bowler
+ODI
+4
+Jadeja
+2500
+Batsman
+ODI
 Batsman
 ODI`,
     expectedOutput: `Lowest runs by Batsman = 2500
@@ -81,10 +113,26 @@ Players in ODI sorted by id desc:
   <li>If no match is found, return null</li>
 </ul>
 <div class="sample-label">Sample Input</div>
-<div class="sample-block">1 Dell Windows 55000 4
-2 HP Windows 48000 3
-3 Apple MacOS 120000 5
-4 Dell Linux 62000 5
+<div class="sample-block">1
+Dell
+Windows
+55000
+4
+2
+HP
+Windows
+48000
+3
+3
+Apple
+MacOS
+120000
+5
+4
+Dell
+Linux
+62000
+5
 Dell
 Windows</div>
 <div class="sample-label">Sample Output</div>
@@ -93,10 +141,26 @@ Laptops with OS Windows sorted by id desc:
 2 HP
 1 Dell</div>`,
     code: "",
-    stdin: `1 Dell Windows 55000 4
-2 HP Windows 48000 3
-3 Apple MacOS 120000 5
-4 Dell Linux 62000 5
+    stdin: `1
+Dell
+Windows
+55000
+4
+2
+HP
+Windows
+48000
+3
+3
+Apple
+MacOS
+120000
+5
+4
+Dell
+Linux
+62000
+5
 Dell
 Windows`,
     expectedOutput: `Count of Dell laptops with rating > 3 = 2
@@ -130,10 +194,30 @@ Laptops with OS Windows sorted by id desc:
   <li>If no matching hotel exists, return null</li>
 </ul>
 <div class="sample-label">Sample Input</div>
-<div class="sample-block">101 Royal Stay 12-05-2024 3 Free 2500
-102 Green Park 16-08-2024 5 Paid 4200
-103 City Inn 05-05-2024 2 Free 1800
-104 Sunset Hotel 18-09-2024 4 Free 3600
+<div class="sample-block">101
+Royal Stay
+12-05-2024
+3
+Free
+2500
+102
+Green Park
+16-08-2024
+5
+Paid
+4200
+103
+City Inn
+05-05-2024
+2
+Free
+1800
+104
+Sunset Hotel
+18-09-2024
+4
+Free
+3600
 05
 Free</div>
 <div class="sample-label">Sample Output</div>
@@ -141,10 +225,30 @@ Free</div>
 Second hotel with WiFi option Free by bill amount descending:
 104 Sunset Hotel</div>`,
     code: "",
-    stdin: `101 Royal Stay 12-05-2024 3 Free 2500
-102 Green Park 16-08-2024 5 Paid 4200
-103 City Inn 05-05-2024 2 Free 1800
-104 Sunset Hotel 18-09-2024 4 Free 3600
+    stdin: `101
+Royal Stay
+12-05-2024
+3
+Free
+2500
+102
+Green Park
+16-08-2024
+5
+Paid
+4200
+103
+City Inn
+05-05-2024
+2
+Free
+1800
+104
+Sunset Hotel
+18-09-2024
+4
+Free
+3600
 05
 Free`,
     expectedOutput: `Total rooms booked in month 05 = 5
@@ -177,10 +281,26 @@ Second hotel with WiFi option Free by bill amount descending:
   <li>If no movie matches, return null</li>
 </ul>
 <div class="sample-label">Sample Input</div>
-<div class="sample-block">1 Inception Sci-Fi 8.8 English
-2 Interstellar Sci-Fi 8.6 English
-3 Dangal Drama 8.4 Hindi
-4 3Idiots Drama 8.1 Hindi
+<div class="sample-block">1
+Inception
+Sci-Fi
+8.8
+English
+2
+Interstellar
+Sci-Fi
+8.6
+English
+3
+Dangal
+Drama
+8.4
+Hindi
+4
+3Idiots
+Drama
+8.1
+Hindi
 Sci-Fi
 English</div>
 <div class="sample-label">Sample Output</div>
@@ -189,10 +309,26 @@ Movies in English sorted by rating desc:
 1 Inception 8.8
 2 Interstellar 8.6</div>`,
     code: "",
-    stdin: `1 Inception Sci-Fi 8.8 English
-2 Interstellar Sci-Fi 8.6 English
-3 Dangal Drama 8.4 Hindi
-4 3Idiots Drama 8.1 Hindi
+    stdin: `1
+Inception
+Sci-Fi
+8.8
+English
+2
+Interstellar
+Sci-Fi
+8.6
+English
+3
+Dangal
+Drama
+8.4
+Hindi
+4
+3Idiots
+Drama
+8.1
+Hindi
 Sci-Fi
 English`,
     expectedOutput: `Highest rated Sci-Fi movie: 1 Inception 8.8
@@ -226,10 +362,26 @@ Movies in English sorted by rating desc:
   <li>If no policy matches, return null</li>
 </ul>
 <div class="sample-label">Sample Input</div>
-<div class="sample-block">1 Alice Gold 15000 5
-2 Bob Silver 8000 3
-3 Charlie Gold 12000 4
-4 Diana Platinum 25000 10
+<div class="sample-block">1
+Alice
+Gold
+15000
+5
+2
+Bob
+Silver
+8000
+3
+3
+Charlie
+Gold
+12000
+4
+4
+Diana
+Platinum
+25000
+10
 Gold
 4</div>
 <div class="sample-label">Sample Output</div>
@@ -239,10 +391,26 @@ Policies with tenure >= 4 sorted by premium asc:
 1 Alice 15000.0
 4 Diana 25000.0</div>`,
     code: "",
-    stdin: `1 Alice Gold 15000 5
-2 Bob Silver 8000 3
-3 Charlie Gold 12000 4
-4 Diana Platinum 25000 10
+    stdin: `1
+Alice
+Gold
+15000
+5
+2
+Bob
+Silver
+8000
+3
+3
+Charlie
+Gold
+12000
+4
+4
+Diana
+Platinum
+25000
+10
 Gold
 4`,
     expectedOutput: `Total premium for Gold = 27000.0
@@ -655,7 +823,11 @@ function loadQuestion(id) {
   }
 
   // Determine stdin to load
-  const savedStdin = getSavedStdin(id);
+  let savedStdin = getSavedStdin(id);
+  if (savedStdin && q.stdin && savedStdin.split("\n").length <= 6 && q.stdin.split("\n").length > 10) {
+    savedStdin = null;
+    saveStdin(id, q.stdin);
+  }
   stdinInput.value = savedStdin !== null ? savedStdin : (q.stdin || "");
 
   // Update expected output
