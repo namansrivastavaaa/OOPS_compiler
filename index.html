@@ -31,10 +31,10 @@
         Server:
         <div id="env-selector"
           style="display: flex; background: rgba(77, 170, 252, 0.1); border: 1px solid #4daafc; border-radius: 6px; overflow: hidden; box-shadow: 0 0 10px rgba(77, 170, 252, 0.3);">
-          <button data-value="local" class="env-toggle-btn active"
-            style="background: #4daafc; color: #fff; border: none; padding: 4px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; outline: none; transition: all 0.3s ease;">Local</button>
-          <button data-value="cloud" class="env-toggle-btn"
-            style="background: transparent; color: #aaa; border: none; padding: 4px 12px; font-size: 0.85rem; font-weight: 500; cursor: pointer; outline: none; transition: all 0.3s ease;">Cloud</button>
+          <button data-value="local" class="env-toggle-btn"
+            style="background: transparent; color: #aaa; border: none; padding: 4px 12px; font-size: 0.85rem; font-weight: 500; cursor: pointer; outline: none; transition: all 0.3s ease;">Local</button>
+          <button data-value="cloud" class="env-toggle-btn active"
+            style="background: #4daafc; color: #fff; border: none; padding: 4px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; outline: none; transition: all 0.3s ease;">Cloud</button>
         </div>
         <span
           style="font-size: 0.7rem; color: #ffb86c; font-weight: 500; text-transform: none; letter-spacing: 0;">(Cloud
@@ -166,7 +166,7 @@
     // Environment selector logic
     const envSelectorEl = document.getElementById('env-selector');
     const envBtns = document.querySelectorAll('.env-toggle-btn');
-    envSelectorEl.value = 'local'; // default
+    envSelectorEl.value = 'cloud'; // default
     envBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         envBtns.forEach(b => {

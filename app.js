@@ -376,13 +376,30 @@ const ENDPOINTS = {
   cloud: 'https://oops-compiler.onrender.com/execute'
 };
 
+// ---- Cloud Server Wake-up Ping (One-time on page load) ----
+let hasPingedCloud = false;
+
+function pingCloudServerOnce() {
+  if (hasPingedCloud) return;
+  hasPingedCloud = true;
+
+  // Render spins up sleeping containers on any incoming HTTP request
+  fetch('https://oops-compiler.onrender.com/health', { method: 'GET', mode: 'no-cors' })
+    .catch(() => {
+      fetch('https://oops-compiler.onrender.com/', { method: 'GET', mode: 'no-cors' }).catch(() => {});
+    });
+}
+
+// Immediately trigger wake-up ping as soon as page script loads
+pingCloudServerOnce();
+
 // ---- DOM Elements ----
 const envSelector = document.getElementById("env-selector");
 const templateListEl = document.getElementById("template-list");
 
 async function executeJavaCode(sourceCode, stdin) {
-  const selectedEnv = envSelector ? envSelector.value : 'local';
-  const url = ENDPOINTS[selectedEnv] || ENDPOINTS.local;
+  const selectedEnv = envSelector ? (envSelector.value || 'cloud') : 'cloud';
+  const url = ENDPOINTS[selectedEnv] || ENDPOINTS.cloud;
 
   const payload = {
     files: [{ name: "Main.java", content: sourceCode }],

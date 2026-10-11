@@ -9,6 +9,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Health check endpoints for server wake-up ping
+app.get('/', (req, res) => res.json({ status: "alive", message: "Java execution server is running." }));
+app.get('/health', (req, res) => res.json({ status: "ok" }));
+
 // Run local Java execution
 app.post('/execute', (req, res) => {
     const { files, stdin } = req.body;
