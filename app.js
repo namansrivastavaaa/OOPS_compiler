@@ -253,6 +253,103 @@ Policies with tenure >= 4 sorted by premium asc:
   },
   {
     id: 6,
+    name: "Coffee Class",
+    description: `<h3>Question 6: Coffee Class</h3>
+<p>You are tasked with designing the <strong>Coffee Management System</strong>.</p>
+<p>Create a class <code>Coffee</code> with private attributes:</p>
+<ul>
+  <li><code>id</code>: int</li>
+  <li><code>name</code>: String</li>
+  <li><code>type</code>: String</li>
+  <li><code>price</code>: double</li>
+</ul>
+<p>Make getter, setter, and constructor for the above-mentioned <code>Coffee</code> class.</p>
+<p>Create the following two static methods in the <code>Main</code>/<code>Solution</code> class:</p>
+<p><strong>Task 1: Find all coffees which are priced higher than or equals to the average price of all coffee</strong></p>
+<ul>
+  <li>Create a static method that returns the <code>List&lt;Coffee&gt;</code> whose price is more than or equals to the average price of all coffee.</li>
+  <li>This method will take 1 input: <code>List&lt;Coffee&gt; coffees</code>.</li>
+  <li>The program should print id, name, type and price of all the coffees returned from the method.</li>
+</ul>
+<p><strong>Task 2: Find the highest priced coffee based on the type:</strong></p>
+<ul>
+  <li>Create a static method which will return the highest priced coffee based on the type mentioned.</li>
+  <li>This method will take 2 inputs: <code>List&lt;Coffee&gt; coffees</code> and <code>String type</code>.</li>
+  <li>Program should print the id, name and price for the highest priced coffee in the main method.</li>
+  <li>If there is no Coffee found with the mentioned type, print <code>"No Coffee Found"</code>.</li>
+</ul>
+<p><strong>Note:</strong></p>
+<ol>
+  <li>Don't hardcode any test/sample data in your code. Just call the methods with the given input and print the raw result (no custom formatting).</li>
+  <li>All comparisons should be case-insensitive.</li>
+  <li>Please refer to the provided sample input and output for better understanding of the program.</li>
+  <li>If the input for the size is 0 no other input will be provided.</li>
+</ol>
+<p><strong>Input Notes:</strong></p>
+<ul>
+  <li>In first line, take number of objects to be taken as input.</li>
+  <li>From second line onwards, program should take id, Name, type, and price.</li>
+</ul>
+<div class="sample-label">Sample Input 1</div>
+<div class="sample-block">3
+1
+Davidoff
+instant
+1015.0
+2
+Barral-aged Coffee
+ground
+1000.0
+3
+Bru
+instant
+100.0
+instant</div>
+<div class="sample-label">Sample Output 1</div>
+<div class="sample-block">1
+Davidoff
+instant
+1015.0
+2
+Barral-aged Coffee
+ground
+1000.0
+1
+Davidoff
+1015.0</div>
+<div class="sample-label">Sample Input 2</div>
+<div class="sample-block">0</div>
+<div class="sample-label">Sample Output 2</div>
+<div class="sample-block">No Coffee Found</div>`,
+    code: "",
+    stdin: `3
+1
+Davidoff
+instant
+1015.0
+2
+Barral-aged Coffee
+ground
+1000.0
+3
+Bru
+instant
+100.0
+instant`,
+    expectedOutput: `1
+Davidoff
+instant
+1015.0
+2
+Barral-aged Coffee
+ground
+1000.0
+1
+Davidoff
+1015.0`
+  },
+  {
+    id: 7,
     name: "Custom / Blank",
     description: `<h3>Custom Java Program</h3>
 <p>Write your own Java OOP program from scratch!</p>
