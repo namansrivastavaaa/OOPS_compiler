@@ -69,7 +69,11 @@
       <section id="editor-section" class="panel">
         <div class="panel-header">
           <div class="panel-header-left">
-            <span>Main.java</span>
+            <span id="file-badge">Main.java</span>
+            <span id="save-status" style="font-size: 0.75rem; color: #888; display: inline-flex; align-items: center; gap: 5px; margin-left: 6px;" title="Changes are automatically saved to your browser">
+              <span id="save-dot" style="width: 7px; height: 7px; border-radius: 50%; background-color: #10b981; display: inline-block;"></span>
+              <span id="save-text">Saved</span>
+            </span>
           </div>
           <div class="panel-header-right">
             <button class="btn btn-icon" id="btn-reset" title="Reset Code">Reset</button>

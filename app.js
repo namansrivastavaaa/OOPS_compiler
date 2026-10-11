@@ -419,9 +419,71 @@ const statusIndicator = document.getElementById("status-indicator");
 const statusText = statusIndicator.querySelector(".status-text");
 const execInfo = document.getElementById("exec-info");
 const fileBadge = document.getElementById("file-badge");
+const saveStatus = document.getElementById("save-status");
+const saveDot = document.getElementById("save-dot");
+const saveText = document.getElementById("save-text");
 
 let monacoEditor = null;
 let currentQuestionId = 1;
+let isSettingValue = false;
+let saveTimeout = null;
+let stdinSaveTimeout = null;
+
+const STORAGE_PREFIX = "oops_compiler_";
+
+function getSavedCode(qId) {
+  try {
+    return localStorage.getItem(`${STORAGE_PREFIX}code_${qId}`);
+  } catch (e) {
+    return null;
+  }
+}
+
+function saveCode(qId, code) {
+  try {
+    localStorage.setItem(`${STORAGE_PREFIX}code_${qId}`, code);
+  } catch (e) {
+    console.warn("LocalStorage save error:", e);
+  }
+}
+
+function getSavedStdin(qId) {
+  try {
+    return localStorage.getItem(`${STORAGE_PREFIX}stdin_${qId}`);
+  } catch (e) {
+    return null;
+  }
+}
+
+function saveStdin(qId, stdin) {
+  try {
+    localStorage.setItem(`${STORAGE_PREFIX}stdin_${qId}`, stdin);
+  } catch (e) {
+    console.warn("LocalStorage save error:", e);
+  }
+}
+
+function clearSavedQuestion(qId) {
+  try {
+    localStorage.removeItem(`${STORAGE_PREFIX}code_${qId}`);
+    localStorage.removeItem(`${STORAGE_PREFIX}stdin_${qId}`);
+  } catch (e) {
+    console.warn("LocalStorage clear error:", e);
+  }
+}
+
+function updateSaveStatus(status) {
+  if (!saveDot || !saveText) return;
+  if (status === "saving") {
+    saveDot.style.backgroundColor = "#f59e0b";
+    saveText.textContent = "Saving...";
+    saveText.style.color = "#f59e0b";
+  } else if (status === "saved") {
+    saveDot.style.backgroundColor = "#10b981";
+    saveText.textContent = "Saved";
+    saveText.style.color = "#888";
+  }
+}
 
 // ---- Initialize Monaco Editor ----
 function initMonaco() {
@@ -476,8 +538,30 @@ function initMonaco() {
       runCode();
     });
 
-    // Load first question
-    loadQuestion(1);
+    // Auto-save on editor input
+    monacoEditor.onDidChangeModelContent(() => {
+      if (isSettingValue) return;
+      updateSaveStatus("saving");
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        saveCode(currentQuestionId, monacoEditor.getValue());
+        updateSaveStatus("saved");
+      }, 300);
+    });
+
+    // Restore last active question or default to 1
+    let initialQuestionId = 1;
+    try {
+      const stored = localStorage.getItem(`${STORAGE_PREFIX}last_question_id`);
+      if (stored) {
+        const parsed = parseInt(stored, 10);
+        if (QUESTIONS.some((q) => q.id === parsed)) {
+          initialQuestionId = parsed;
+        }
+      }
+    } catch (e) {}
+
+    loadQuestion(initialQuestionId);
   });
 }
 
@@ -502,6 +586,9 @@ function loadQuestion(id) {
   if (!q) return;
 
   currentQuestionId = id;
+  try {
+    localStorage.setItem(`${STORAGE_PREFIX}last_question_id`, id);
+  } catch (e) {}
 
   // Update sidebar
   questionDisplayEl.innerHTML = q.description;
@@ -511,14 +598,22 @@ function loadQuestion(id) {
     el.classList.toggle("active", parseInt(el.dataset.id) === id);
   });
 
+  // Determine code to load: saved draft or question template
+  const savedCode = getSavedCode(id);
+  const codeToSet = savedCode !== null ? savedCode : q.code;
+
   // Update editor
   if (monacoEditor) {
-    monacoEditor.setValue(q.code);
+    isSettingValue = true;
+    monacoEditor.setValue(codeToSet);
     monacoEditor.setScrollTop(0);
+    isSettingValue = false;
+    updateSaveStatus("saved");
   }
 
-  // Update stdin
-  stdinInput.value = q.stdin || "";
+  // Determine stdin to load
+  const savedStdin = getSavedStdin(id);
+  stdinInput.value = savedStdin !== null ? savedStdin : (q.stdin || "");
 
   // Update expected output
   expectedOutput.value = q.expectedOutput || "";
@@ -527,7 +622,9 @@ function loadQuestion(id) {
   clearOutput();
 
   // Update file badge
-  fileBadge.textContent = "Main.java";
+  if (fileBadge) {
+    fileBadge.textContent = "Main.java";
+  }
 }
 
 // ---- Run Code ----
@@ -648,7 +745,31 @@ function clearOutput() {
 btnRun.addEventListener("click", runCode);
 
 btnReset.addEventListener("click", () => {
+  const hasSaved = getSavedCode(currentQuestionId) !== null;
+  if (hasSaved) {
+    const confirmed = confirm("Are you sure you want to reset? Your saved code for this question will be cleared.");
+    if (!confirmed) return;
+    clearSavedQuestion(currentQuestionId);
+  }
   loadQuestion(currentQuestionId);
+});
+
+// Auto-save stdin changes
+stdinInput.addEventListener("input", () => {
+  clearTimeout(stdinSaveTimeout);
+  stdinSaveTimeout = setTimeout(() => {
+    saveStdin(currentQuestionId, stdinInput.value);
+  }, 300);
+});
+
+// Immediate save before reload or accidental tab close
+window.addEventListener("beforeunload", () => {
+  if (monacoEditor && !isSettingValue) {
+    saveCode(currentQuestionId, monacoEditor.getValue());
+  }
+  if (stdinInput) {
+    saveStdin(currentQuestionId, stdinInput.value);
+  }
 });
 
 btnFormat.addEventListener("click", () => {
