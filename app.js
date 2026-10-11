@@ -422,6 +422,9 @@ const fileBadge = document.getElementById("file-badge");
 const saveStatus = document.getElementById("save-status");
 const saveDot = document.getElementById("save-dot");
 const saveText = document.getElementById("save-text");
+const btnFontDec = document.getElementById("btn-font-dec");
+const btnFontInc = document.getElementById("btn-font-inc");
+const fontSizeDisplay = document.getElementById("font-size-display");
 
 let monacoEditor = null;
 let currentQuestionId = 1;
@@ -430,6 +433,28 @@ let saveTimeout = null;
 let stdinSaveTimeout = null;
 
 const STORAGE_PREFIX = "oops_compiler_";
+
+let currentFontSize = 15;
+try {
+  const storedSize = parseInt(localStorage.getItem(`${STORAGE_PREFIX}font_size`), 10);
+  if (storedSize >= 10 && storedSize <= 36) {
+    currentFontSize = storedSize;
+  }
+} catch (e) {}
+
+function setFontSize(newSize) {
+  currentFontSize = Math.min(36, Math.max(10, newSize));
+  try {
+    localStorage.setItem(`${STORAGE_PREFIX}font_size`, currentFontSize);
+  } catch (e) {}
+
+  if (monacoEditor) {
+    monacoEditor.updateOptions({ fontSize: currentFontSize });
+  }
+  if (fontSizeDisplay) {
+    fontSizeDisplay.textContent = `${currentFontSize}px`;
+  }
+}
 
 function getSavedCode(qId) {
   try {
@@ -499,9 +524,10 @@ function initMonaco() {
       language: "java",
       theme: "vs-dark",
       fontFamily: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace",
-      fontSize: 15,
+      fontSize: currentFontSize,
       lineHeight: 24,
       fontLigatures: true,
+      mouseWheelZoom: true,
       minimap: { enabled: false },
       scrollBeyondLastLine: false,
       padding: { top: 12, bottom: 12 },
@@ -788,12 +814,38 @@ expectedOutput.addEventListener("input", () => {
   }
 });
 
+// ---- Font Size Controls ----
+if (btnFontInc) {
+  btnFontInc.addEventListener("click", () => setFontSize(currentFontSize + 1));
+}
+if (btnFontDec) {
+  btnFontDec.addEventListener("click", () => setFontSize(currentFontSize - 1));
+}
+if (fontSizeDisplay) {
+  fontSizeDisplay.textContent = `${currentFontSize}px`;
+}
+
 // ---- Keyboard Shortcuts ----
 document.addEventListener("keydown", (e) => {
-  // Ctrl+Enter also works globally
+  // Ctrl+Enter: Run code
   if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
     e.preventDefault();
     runCode();
+  }
+  // Ctrl + Plus / Equal: Increase font size
+  else if ((e.ctrlKey || e.metaKey) && (e.key === "=" || e.key === "+")) {
+    e.preventDefault();
+    setFontSize(currentFontSize + 1);
+  }
+  // Ctrl + Minus: Decrease font size
+  else if ((e.ctrlKey || e.metaKey) && (e.key === "-" || e.key === "_")) {
+    e.preventDefault();
+    setFontSize(currentFontSize - 1);
+  }
+  // Ctrl + 0: Reset font size to default (15px)
+  else if ((e.ctrlKey || e.metaKey) && e.key === "0") {
+    e.preventDefault();
+    setFontSize(15);
   }
 });
 
