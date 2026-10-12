@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Java OOP Compiler — Application Logic
+   Specialized OOP Compiler — Application Logic (Java & Python)
    ========================================================================== */
 
 // ---- Question Templates (Skeleton only — no solutions!) ----
@@ -472,31 +472,31 @@ Policies with tenure >= 4 sorted by premium asc:
   <li><code>price</code>: double</li>
 </ul>
 <p>Make getter, setter, and constructor for the above-mentioned <code>Coffee</code> class.</p>
-<p>Create the following two static methods in the <code>Main</code>/<code>Solution</code> class:</p>
+<p>Create the following two methods / functions:</p>
 <p><strong>Task 1: Find all coffees which are priced higher than or equals to the average price of all coffee</strong></p>
 <ul>
-  <li>Create a static method that returns the <code>List&lt;Coffee&gt;</code> whose price is more than or equals to the average price of all coffee.</li>
-  <li>This method will take 1 input: <code>List&lt;Coffee&gt; coffees</code>.</li>
-  <li>The program should print id, name, type and price of all the coffees returned from the method.</li>
+  <li>Returns the list of coffees whose price is &gt;= average price of all coffee.</li>
+  <li>Input: list of coffees.</li>
+  <li>Print id, name, type, and price of each matching coffee.</li>
 </ul>
 <p><strong>Task 2: Find the highest priced coffee based on the type:</strong></p>
 <ul>
-  <li>Create a static method which will return the highest priced coffee based on the type mentioned.</li>
-  <li>This method will take 2 inputs: <code>List&lt;Coffee&gt; coffees</code> and <code>String type</code>.</li>
-  <li>Program should print the id, name and price for the highest priced coffee in the main method.</li>
-  <li>If there is no Coffee found with the mentioned type, print <code>"No Coffee Found"</code>.</li>
+  <li>Returns the highest priced coffee matching the given type (ignore case).</li>
+  <li>Input: list of coffees and type.</li>
+  <li>Print id, name, and price for the highest priced coffee.</li>
+  <li>If no Coffee is found with that type, print <code>"No Coffee Found"</code>.</li>
 </ul>
 <p><strong>Note:</strong></p>
 <ol>
-  <li>Don't hardcode any test/sample data in your code. Just call the methods with the given input and print the raw result (no custom formatting).</li>
+  <li>Don't hardcode any test/sample data. Read from stdin and print raw output.</li>
   <li>All comparisons should be case-insensitive.</li>
-  <li>Please refer to the provided sample input and output for better understanding of the program.</li>
-  <li>If the input for the size is 0 no other input will be provided.</li>
+  <li>If the input for the count is 0, print <code>"No Coffee Found"</code>.</li>
 </ol>
 <p><strong>Input Notes:</strong></p>
 <ul>
   <li>In first line, take number of objects to be taken as input.</li>
-  <li>From second line onwards, program should take id, Name, type, and price.</li>
+  <li>From second line onwards, program takes id, name, type, and price for each object.</li>
+  <li>In the last line, take the search type.</li>
 </ul>
 <div class="sample-label">Sample Input 1</div>
 <div class="sample-block">3
@@ -559,26 +559,14 @@ Davidoff
   {
     id: 7,
     name: "Custom / Blank",
-    description: `<h3>Custom Java Program</h3>
-<p>Write your own Java OOP program from scratch!</p>
-<p>Use the editor to write any Java class, then compile and run it.</p>
-<ul>
-  <li>The main class <strong>must</strong> be named <code>Main</code></li>
-  <li>Provide any required input in the <strong>Input (stdin)</strong> field</li>
-  <li>Optionally paste expected output to auto-verify</li>
-</ul>`,
+    description: "", // Dynamically updated per language
     code: "",
     stdin: "",
     expectedOutput: ""
   }
 ];
 
-// ---- Piston API (with fallback) ----
-const PISTON_API_URLS = [
-  "https://emkc.org/api/v2/piston/execute",
-  "https://piston-api.vercel.app/api/v2/execute"
-];
-
+// ---- Endpoints ----
 const ENDPOINTS = {
   local: 'http://localhost:3000/execute',
   cloud: 'https://oops-compiler.onrender.com/execute'
@@ -591,73 +579,30 @@ function pingCloudServerOnce() {
   if (hasPingedCloud) return;
   hasPingedCloud = true;
 
-  // Render spins up sleeping containers on any incoming HTTP request
   fetch('https://oops-compiler.onrender.com/health', { method: 'GET', mode: 'no-cors' })
     .catch(() => {
       fetch('https://oops-compiler.onrender.com/', { method: 'GET', mode: 'no-cors' }).catch(() => {});
     });
 }
-
-// Immediately trigger wake-up ping as soon as page script loads
 pingCloudServerOnce();
 
-// ---- DOM Elements ----
-const envSelector = document.getElementById("env-selector");
-const templateListEl = document.getElementById("template-list");
-
-async function executeJavaCode(sourceCode, stdin) {
-  const selectedEnv = envSelector ? (envSelector.value || 'cloud') : 'cloud';
-  const url = ENDPOINTS[selectedEnv] || ENDPOINTS.cloud;
-
-  const payload = {
-    files: [{ name: "Main.java", content: sourceCode }],
-    stdin: stdin || ""
-  };
-
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    
-    if (!response.ok) throw new Error(`Server Error: ${response.status}`);
-    return await response.json();
-  } catch (err) {
-    if (selectedEnv === 'cloud') {
-      throw new Error('Failed to connect to Render Cloud Server. Note: Render free tier takes ~30-60s to wake up on cold starts.');
-    } else {
-      throw new Error('Failed to connect to Local Server (http://localhost:3000). Did you start `node Backend/server.js`?');
-    }
-  }
-}
-const questionDisplayEl = document.getElementById("question-display");
-const stdinInput = document.getElementById("stdin-input");
-const outputDisplay = document.getElementById("output-display");
-const expectedOutput = document.getElementById("expected-output");
-const matchBadge = document.getElementById("match-badge");
-const btnRun = document.getElementById("btn-run");
-const btnReset = document.getElementById("btn-reset");
-const btnFormat = document.getElementById("btn-format");
-const btnClearOutput = document.getElementById("btn-clear-output");
-const statusIndicator = document.getElementById("status-indicator");
-const statusText = statusIndicator.querySelector(".status-text");
-const execInfo = document.getElementById("exec-info");
-const fileBadge = document.getElementById("file-badge");
-const saveStatus = document.getElementById("save-status");
-const saveDot = document.getElementById("save-dot");
-const saveText = document.getElementById("save-text");
-const btnFontDec = document.getElementById("btn-font-dec");
-const btnFontInc = document.getElementById("btn-font-inc");
-const fontSizeDisplay = document.getElementById("font-size-display");
-
-let monacoEditor = null;
-let currentQuestionId = 1;
-let isSettingValue = false;
-let saveTimeout = null;
-let stdinSaveTimeout = null;
-
+// ---- State Management ----
 const STORAGE_PREFIX = "oops_compiler_";
+
+let currentQuestionId = 1;
+let currentLanguage = "java"; // "java" | "python"
+
+// Restore saved settings
+try {
+  const savedLang = localStorage.getItem(`${STORAGE_PREFIX}last_language`);
+  if (savedLang === "java" || savedLang === "python") {
+    currentLanguage = savedLang;
+  }
+  const savedQ = parseInt(localStorage.getItem(`${STORAGE_PREFIX}last_question_id`), 10);
+  if (QUESTIONS.some(q => q.id === savedQ)) {
+    currentQuestionId = savedQ;
+  }
+} catch (e) {}
 
 let currentFontSize = 15;
 try {
@@ -667,56 +612,85 @@ try {
   }
 } catch (e) {}
 
-function setFontSize(newSize) {
-  currentFontSize = Math.min(36, Math.max(10, newSize));
-  try {
-    localStorage.setItem(`${STORAGE_PREFIX}font_size`, currentFontSize);
-  } catch (e) {}
+// Editor instance & timers
+let monacoEditor = null;
+let isSettingValue = false;
+let saveTimeout = null;
 
-  if (monacoEditor) {
-    monacoEditor.updateOptions({ fontSize: currentFontSize });
-  }
-  if (fontSizeDisplay) {
-    fontSizeDisplay.textContent = `${currentFontSize}px`;
-  }
-}
+// ---- DOM Elements ----
+const envSelector = document.getElementById("env-selector");
+const templateListEl = document.getElementById("template-list");
+const questionDisplayEl = document.getElementById("question-display");
 
-function getSavedCode(qId) {
+const editorSection = document.getElementById("editor-section");
+const ioSection = document.getElementById("io-section");
+const gutterV = document.getElementById("gutter-v");
+const gutterH = document.getElementById("gutter-h");
+const sidebar = document.getElementById("sidebar");
+
+const outputDisplay = document.getElementById("output-display");
+const expectedOutputDisplay = document.getElementById("expected-output-display");
+const matchBadge = document.getElementById("match-badge");
+const outputMeta = document.getElementById("output-meta");
+
+const btnRun = document.getElementById("btn-run");
+const btnRunText = document.getElementById("btn-run-text");
+const btnReset = document.getElementById("btn-reset");
+const btnFormat = document.getElementById("btn-format");
+const btnClearOutput = document.getElementById("btn-clear-output");
+const btnCloseOutput = document.getElementById("btn-close-output");
+
+const statusIndicator = document.getElementById("status-indicator");
+const statusText = statusIndicator.querySelector(".status-text");
+const execInfo = document.getElementById("exec-info");
+const fileBadge = document.getElementById("file-badge");
+
+const saveDot = document.getElementById("save-dot");
+const saveText = document.getElementById("save-text");
+
+const btnFontDec = document.getElementById("btn-font-dec");
+const btnFontInc = document.getElementById("btn-font-inc");
+const fontSizeDisplay = document.getElementById("font-size-display");
+const footerLangMode = document.getElementById("footer-lang-mode");
+
+const btnLangJava = document.getElementById("btn-lang-java");
+const btnLangPython = document.getElementById("btn-lang-python");
+
+// ---- LocalStorage Helpers ----
+function getSavedCode(qId, lang) {
   try {
-    return localStorage.getItem(`${STORAGE_PREFIX}code_${qId}`);
+    const key = `${STORAGE_PREFIX}code_${lang}_${qId}`;
+    const val = localStorage.getItem(key);
+    if (val !== null) return val;
+
+    // Backward compatibility: If Java requested and old single-language code exists, migrate it
+    if (lang === "java") {
+      const oldVal = localStorage.getItem(`${STORAGE_PREFIX}code_${qId}`);
+      if (oldVal !== null) {
+        localStorage.setItem(key, oldVal);
+        return oldVal;
+      }
+    }
+    return null;
   } catch (e) {
     return null;
   }
 }
 
-function saveCode(qId, code) {
+function saveCode(qId, lang, code) {
   try {
-    localStorage.setItem(`${STORAGE_PREFIX}code_${qId}`, code);
+    localStorage.setItem(`${STORAGE_PREFIX}code_${lang}_${qId}`, code);
   } catch (e) {
     console.warn("LocalStorage save error:", e);
   }
 }
 
-function getSavedStdin(qId) {
+function clearSavedQuestion(qId, lang) {
   try {
-    return localStorage.getItem(`${STORAGE_PREFIX}stdin_${qId}`);
-  } catch (e) {
-    return null;
-  }
-}
-
-function saveStdin(qId, stdin) {
-  try {
-    localStorage.setItem(`${STORAGE_PREFIX}stdin_${qId}`, stdin);
-  } catch (e) {
-    console.warn("LocalStorage save error:", e);
-  }
-}
-
-function clearSavedQuestion(qId) {
-  try {
-    localStorage.removeItem(`${STORAGE_PREFIX}code_${qId}`);
-    localStorage.removeItem(`${STORAGE_PREFIX}stdin_${qId}`);
+    localStorage.removeItem(`${STORAGE_PREFIX}code_${lang}_${qId}`);
+    if (lang === "java") {
+      localStorage.removeItem(`${STORAGE_PREFIX}code_${qId}`);
+    }
   } catch (e) {
     console.warn("LocalStorage clear error:", e);
   }
@@ -728,14 +702,155 @@ function updateSaveStatus(status) {
     saveDot.style.backgroundColor = "#f59e0b";
     saveText.textContent = "Saving...";
     saveText.style.color = "#f59e0b";
-  } else if (status === "saved") {
+  } else {
     saveDot.style.backgroundColor = "#10b981";
     saveText.textContent = "Saved";
     saveText.style.color = "#888";
   }
 }
 
-// ---- Initialize Monaco Editor ----
+// ---- Font Size Control ----
+function setFontSize(newSize) {
+  currentFontSize = Math.min(36, Math.max(10, newSize));
+  try {
+    localStorage.setItem(`${STORAGE_PREFIX}font_size`, currentFontSize);
+  } catch (e) {}
+
+  if (monacoEditor) monacoEditor.updateOptions({ fontSize: currentFontSize });
+  if (fontSizeDisplay) fontSizeDisplay.textContent = `${currentFontSize}px`;
+}
+
+// ---- Dynamic Question Description Generator ----
+function getQuestionDescription(q) {
+  if (q.id === 7) {
+    if (currentLanguage === "python") {
+      return `<h3>Custom Python OOP Program</h3>
+<p>Write your own Python Object-Oriented Program from scratch!</p>
+<ul>
+  <li>Define classes, <code>__init__</code> constructors, methods, and functions in <code>main.py</code></li>
+  <li>Output and Expected Output will appear below once you click <strong>Run</strong></li>
+</ul>`;
+    } else {
+      return `<h3>Custom Java Program</h3>
+<p>Write your own Java OOP program from scratch!</p>
+<p>Use the editor to write any Java class, then compile and run it.</p>
+<ul>
+  <li>The main class <strong>must</strong> be named <code>Main</code></li>
+  <li>Output and Expected Output will appear below once you click <strong>Run</strong></li>
+</ul>`;
+    }
+  }
+  return q.description;
+}
+
+// ---- Question Loading ----
+function loadQuestion(id) {
+  const q = QUESTIONS.find(q => q.id === id);
+  if (!q) return;
+
+  currentQuestionId = id;
+  try {
+    localStorage.setItem(`${STORAGE_PREFIX}last_question_id`, id);
+  } catch (e) {}
+
+  // Update sidebar
+  questionDisplayEl.innerHTML = getQuestionDescription(q);
+
+  // Update active item in sidebar list
+  document.querySelectorAll(".template-item").forEach(el => {
+    el.classList.toggle("active", parseInt(el.dataset.id, 10) === id);
+  });
+
+  // Load saved code for active language
+  const saved = getSavedCode(id, currentLanguage);
+  const codeToSet = saved !== null ? saved : (q.code || "");
+
+  if (monacoEditor) {
+    isSettingValue = true;
+    monacoEditor.setValue(codeToSet);
+    monacoEditor.setScrollTop(0);
+    isSettingValue = false;
+    updateSaveStatus("saved");
+  }
+
+  // Hide the execution output drawer on switching questions
+  hideOutputDrawer();
+}
+
+// ---- Language Switcher (Java <-> Python) ----
+function setLanguage(lang) {
+  if (lang !== "java" && lang !== "python") return;
+
+  // Save current language draft before switching
+  if (monacoEditor && !isSettingValue) {
+    saveCode(currentQuestionId, currentLanguage, monacoEditor.getValue());
+  }
+
+  currentLanguage = lang;
+  try {
+    localStorage.setItem(`${STORAGE_PREFIX}last_language`, lang);
+  } catch (e) {}
+
+  // Update Language toggle buttons
+  btnLangJava.classList.toggle("active", lang === "java");
+  btnLangJava.setAttribute("aria-selected", lang === "java");
+  btnLangPython.classList.toggle("active", lang === "python");
+  btnLangPython.setAttribute("aria-selected", lang === "python");
+
+  // Update file badge
+  if (lang === "java") {
+    fileBadge.className = "badge-java";
+    fileBadge.textContent = "☕ Main.java";
+    btnRunText.textContent = "Run";
+    footerLangMode.textContent = "Java 17 • Execution Server";
+  } else {
+    fileBadge.className = "badge-python";
+    fileBadge.textContent = "🐍 main.py";
+    btnRunText.textContent = "Run";
+    footerLangMode.textContent = "Python 3 • Execution Server";
+  }
+
+  // Update Monaco language mode & load saved code
+  if (monacoEditor) {
+    const model = monacoEditor.getModel();
+    if (model) {
+      monaco.editor.setModelLanguage(model, lang);
+    }
+    const saved = getSavedCode(currentQuestionId, lang);
+    const q = QUESTIONS.find(q => q.id === currentQuestionId);
+    isSettingValue = true;
+    monacoEditor.setValue(saved !== null ? saved : (q ? q.code : ""));
+    isSettingValue = false;
+    updateSaveStatus("saved");
+  }
+
+  // Update Question 7 description if selected
+  if (currentQuestionId === 7) {
+    const q7 = QUESTIONS.find(q => q.id === 7);
+    if (q7) questionDisplayEl.innerHTML = getQuestionDescription(q7);
+  }
+}
+
+// ---- Output Drawer Controls ----
+function showOutputDrawer() {
+  ioSection.style.display = "flex";
+  gutterV.style.display = "block";
+  if (monacoEditor) {
+    setTimeout(() => monacoEditor.layout(), 10);
+  }
+}
+
+function hideOutputDrawer() {
+  ioSection.style.display = "none";
+  gutterV.style.display = "none";
+  matchBadge.className = "match-badge";
+  matchBadge.textContent = "";
+  if (monacoEditor) {
+    setTimeout(() => monacoEditor.layout(), 10);
+  }
+}
+
+// ---- Monaco Initialization ----
 function initMonaco() {
   require.config({
     paths: {
@@ -744,10 +859,14 @@ function initMonaco() {
   });
 
   require(["vs/editor/editor.main"], function () {
+    const q = QUESTIONS.find(q => q.id === currentQuestionId);
+    const initialSaved = getSavedCode(currentQuestionId, currentLanguage);
+    const initialCode = initialSaved !== null ? initialSaved : (q ? q.code : "");
+
     monacoEditor = monaco.editor.create(document.getElementById("monaco-editor"), {
-      value: QUESTIONS[0].code,
-      language: "java",
       theme: "vs-dark",
+      language: currentLanguage,
+      value: initialCode,
       fontFamily: "'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace",
       fontSize: currentFontSize,
       lineHeight: 24,
@@ -763,10 +882,7 @@ function initMonaco() {
       insertSpaces: true,
       renderWhitespace: "none",
       bracketPairColorization: { enabled: true },
-      guides: {
-        bracketPairs: true,
-        indentation: true,
-      },
+      guides: { bracketPairs: true, indentation: true },
       smoothScrolling: true,
       cursorBlinking: "smooth",
       cursorSmoothCaretAnimation: "on",
@@ -780,11 +896,11 @@ function initMonaco() {
       scrollbar: {
         verticalScrollbarSize: 6,
         horizontalScrollbarSize: 6,
-        verticalSliderSize: 6,
+        verticalSliderSize: 6
       }
     });
 
-    // Ctrl+Enter to run
+    // Keyboard Command: Ctrl+Enter inside editor runs code
     monacoEditor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
       runCode();
     });
@@ -795,36 +911,25 @@ function initMonaco() {
       updateSaveStatus("saving");
       clearTimeout(saveTimeout);
       saveTimeout = setTimeout(() => {
-        saveCode(currentQuestionId, monacoEditor.getValue());
+        saveCode(currentQuestionId, currentLanguage, monacoEditor.getValue());
         updateSaveStatus("saved");
       }, 300);
     });
 
-    // Restore last active question or default to 1
-    let initialQuestionId = 1;
-    try {
-      const stored = localStorage.getItem(`${STORAGE_PREFIX}last_question_id`);
-      if (stored) {
-        const parsed = parseInt(stored, 10);
-        if (QUESTIONS.some((q) => q.id === parsed)) {
-          initialQuestionId = parsed;
-        }
-      }
-    } catch (e) {}
-
-    loadQuestion(initialQuestionId);
+    setLanguage(currentLanguage);
+    loadQuestion(currentQuestionId);
   });
 }
 
-// ---- Template List ----
+// ---- Sidebar Template List ----
 function renderTemplateList() {
   templateListEl.innerHTML = "";
-  QUESTIONS.forEach((q) => {
+  QUESTIONS.forEach(q => {
     const item = document.createElement("div");
     item.className = `template-item${q.id === currentQuestionId ? " active" : ""}`;
     item.dataset.id = q.id;
     item.innerHTML = `
-      <span class="template-number">${q.id}</span>
+      <span class="template-number">${q.id}.</span>
       <span class="template-name">${q.name}</span>
     `;
     item.addEventListener("click", () => loadQuestion(q.id));
@@ -832,118 +937,113 @@ function renderTemplateList() {
   });
 }
 
-function loadQuestion(id) {
-  const q = QUESTIONS.find((q) => q.id === id);
-  if (!q) return;
+// ---- Execute Code via Local/Cloud Backend ----
+async function executeCode(language, sourceCode, stdin) {
+  const selectedEnv = envSelector ? (envSelector.value || "cloud") : "cloud";
+  const url = ENDPOINTS[selectedEnv] || ENDPOINTS.cloud;
 
-  currentQuestionId = id;
+  const fileName = language === "python" ? "main.py" : "Main.java";
+  const payload = {
+    language: language,
+    files: [{ name: fileName, content: sourceCode }],
+    stdin: stdin || ""
+  };
+
   try {
-    localStorage.setItem(`${STORAGE_PREFIX}last_question_id`, id);
-  } catch (e) {}
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
 
-  // Update sidebar
-  questionDisplayEl.innerHTML = q.description;
-
-  // Update active state in list
-  document.querySelectorAll(".template-item").forEach((el) => {
-    el.classList.toggle("active", parseInt(el.dataset.id) === id);
-  });
-
-  // Determine code to load: saved draft or question template
-  const savedCode = getSavedCode(id);
-  const codeToSet = savedCode !== null ? savedCode : q.code;
-
-  // Update editor
-  if (monacoEditor) {
-    isSettingValue = true;
-    monacoEditor.setValue(codeToSet);
-    monacoEditor.setScrollTop(0);
-    isSettingValue = false;
-    updateSaveStatus("saved");
-  }
-
-  // Determine stdin to load
-  let savedStdin = getSavedStdin(id);
-  if (savedStdin && q.stdin) {
-    const savedFirst = savedStdin.trim().split("\n")[0].trim();
-    const qFirst = q.stdin.trim().split("\n")[0].trim();
-    if (savedFirst !== qFirst && (qFirst === "4" || qFirst === "3")) {
-      savedStdin = null;
-      saveStdin(id, q.stdin);
-    } else if (savedStdin.split("\n").length <= 6 && q.stdin.split("\n").length > 10) {
-      savedStdin = null;
-      saveStdin(id, q.stdin);
+    if (!response.ok) throw new Error(`Server Error: ${response.status}`);
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    if (selectedEnv === "cloud") {
+      throw new Error(`Failed to connect to Cloud Server. (${err.message}). Note: Render free tier takes ~30-60s to wake up on cold starts.`);
+    } else {
+      throw new Error(`Failed to connect to Local Server (http://localhost:3000). Ensure \`node Backend/server.js\` is running.`);
     }
-  }
-  stdinInput.value = savedStdin !== null ? savedStdin : (q.stdin || "");
-
-  // Update expected output
-  expectedOutput.value = q.expectedOutput || "";
-
-  // Clear output
-  clearOutput();
-
-  // Update file badge
-  if (fileBadge) {
-    fileBadge.textContent = "Main.java";
   }
 }
 
-// ---- Run Code ----
+// ---- Run Code Engine ----
 let isRunning = false;
 
 async function runCode() {
   if (isRunning || !monacoEditor) return;
 
+  const code = monacoEditor.getValue();
+  if (!code.trim()) {
+    showOutputDrawer();
+    outputDisplay.innerHTML = `<span class="output-placeholder">Code is empty. Write your ${currentLanguage === "python" ? "Python" : "Java"} code first!</span>`;
+    return;
+  }
+
+  const q = QUESTIONS.find(q => q.id === currentQuestionId);
+  const expectedText = (q && q.expectedOutput) ? q.expectedOutput : "";
+  const sampleStdin = (q && q.stdin) ? q.stdin : "";
+
+  // Show the output drawer
+  showOutputDrawer();
+  expectedOutputDisplay.textContent = expectedText || "None specified";
+
   isRunning = true;
   const startTime = performance.now();
+  const langLabel = currentLanguage === "python" ? "Python" : "Java";
 
-  // UI: Running state
+  // UI: Running State
   btnRun.classList.add("running");
   btnRun.innerHTML = `
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-    <span>Running...</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+    <span>Running ${langLabel}...</span>
   `;
-  setStatus("running", "Compiling...");
-  outputDisplay.innerHTML = '<span class="output-placeholder">Compiling and running...</span>';
+
+  setStatus("running", `Running ${langLabel}...`);
+  outputDisplay.innerHTML = `<span class="output-placeholder">Executing ${langLabel} code...</span>`;
   matchBadge.className = "match-badge";
   matchBadge.textContent = "";
+  outputMeta.textContent = "";
 
   try {
-    const code = monacoEditor.getValue();
-    const stdin = stdinInput.value;
-
-    const result = await executeJavaCode(code, stdin);
+    const result = await executeCode(currentLanguage, code, sampleStdin);
     const elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
 
-    // Process result
+    // Check for compilation failure
     if (result.compile && result.compile.code !== 0) {
-      // Compilation error
-      const errorMsg = result.compile.stderr || result.compile.output || "Unknown compilation error";
+      let errorMsg = result.compile.stderr || result.compile.output || "Compilation error";
+      
+      // Detection: if older cloud server tried to compile Python with javac
+      if (currentLanguage === "python" && errorMsg.includes("Main.java")) {
+        errorMsg = `⚠️ Cloud Server does not have Python installed yet.\nPlease redeploy the updated server to Render, or switch Server to "Local" (run \`node Backend/server.js\`) to execute Python code!`;
+      }
+      
       outputDisplay.innerHTML = `<span class="output-error">${escapeHtml(errorMsg)}</span>`;
-      setStatus("error", "Compilation Error");
-      execInfo.textContent = `Compile failed • ${elapsed}s`;
+      setStatus("error", `${langLabel} Error`);
+      execInfo.textContent = `${langLabel} compile failed • ${elapsed}s`;
+      outputMeta.textContent = `Compile Error (${elapsed}s)`;
     } else if (result.run) {
       const output = result.run.output || "";
       const stderr = result.run.stderr || "";
 
       if (result.run.code !== 0 && stderr) {
-        // Runtime error
         outputDisplay.innerHTML = `<span class="output-error">${escapeHtml(stderr)}</span>`;
         if (output) {
           outputDisplay.innerHTML += `\n${escapeHtml(output)}`;
         }
-        setStatus("error", "Runtime Error");
-        execInfo.textContent = `Runtime error • ${elapsed}s`;
+        setStatus("error", `${langLabel} Runtime Error`);
+        execInfo.textContent = `${langLabel} error (code ${result.run.code}) • ${elapsed}s`;
+        outputMeta.textContent = `Exit Code: ${result.run.code} (${elapsed}s)`;
       } else {
-        // Success
         const displayOutput = output.replace(/\n$/, "");
         outputDisplay.innerHTML = `<span class="output-success">${escapeHtml(displayOutput)}</span>`;
         setStatus("ready", "Success");
-        execInfo.textContent = `Executed in ${elapsed}s`;
-
-        // Check against expected output
-        checkOutput(displayOutput);
+        execInfo.textContent = `${langLabel} executed in ${elapsed}s`;
+        outputMeta.textContent = `${elapsed}s`;
+        
+        // Auto-verify with expected output
+        checkOutput(displayOutput, expectedText);
       }
     } else {
       outputDisplay.innerHTML = '<span class="output-error">No response from execution engine.</span>';
@@ -952,20 +1052,20 @@ async function runCode() {
     }
   } catch (err) {
     outputDisplay.innerHTML = `<span class="output-error">Error: ${escapeHtml(err.message)}</span>`;
-    setStatus("error", "Network Error");
+    setStatus("error", "Error");
     execInfo.textContent = "";
   } finally {
     isRunning = false;
     btnRun.classList.remove("running");
     btnRun.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-      <span>Run</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <span id="btn-run-text">Run</span>
     `;
   }
 }
 
-function checkOutput(actual) {
-  const expected = expectedOutput.value.trim();
+// ---- Output Verification against Expected Output ----
+function checkOutput(actual, expected) {
   if (!expected) {
     matchBadge.className = "match-badge";
     matchBadge.textContent = "";
@@ -984,131 +1084,143 @@ function checkOutput(actual) {
   }
 }
 
-// ---- Helpers ----
+function clearOutput() {
+  outputDisplay.innerHTML = '<span class="output-placeholder">Output cleared. Run code again to see results.</span>';
+  matchBadge.className = "match-badge";
+  matchBadge.textContent = "";
+  outputMeta.textContent = "";
+}
+
+function setStatus(state, text) {
+  statusIndicator.className = `status-indicator${state === "running" ? " running" : state === "error" ? " error" : state === "ready" ? " ready" : ""}`;
+  statusText.textContent = text;
+}
+
 function escapeHtml(str) {
   const div = document.createElement("div");
   div.textContent = str;
   return div.innerHTML;
 }
 
-function setStatus(state, text) {
-  statusIndicator.className = `status-indicator${state === "running" ? " running" : state === "error" ? " error" : ""}`;
-  statusText.textContent = text;
-}
+// ---- Reset Code ----
+function handleReset() {
+  const langLabel = currentLanguage === "python" ? "Python" : "Java";
+  const hasSaved = getSavedCode(currentQuestionId, currentLanguage) !== null;
 
-function clearOutput() {
-  outputDisplay.innerHTML = '<span class="output-placeholder">Output will appear here after running your code...</span>';
-  matchBadge.className = "match-badge";
-  matchBadge.textContent = "";
-  execInfo.textContent = "";
-}
-
-// ---- Event Listeners ----
-btnRun.addEventListener("click", runCode);
-
-btnReset.addEventListener("click", () => {
-  const hasSaved = getSavedCode(currentQuestionId) !== null;
   if (hasSaved) {
-    const confirmed = confirm("Are you sure you want to reset? Your saved code for this question will be cleared.");
+    const confirmed = confirm(`Are you sure you want to reset your saved ${langLabel} code for this question?`);
     if (!confirmed) return;
-    clearSavedQuestion(currentQuestionId);
+    clearSavedQuestion(currentQuestionId, currentLanguage);
   }
-  loadQuestion(currentQuestionId);
-});
 
-// Auto-save stdin changes
-stdinInput.addEventListener("input", () => {
-  clearTimeout(stdinSaveTimeout);
-  stdinSaveTimeout = setTimeout(() => {
-    saveStdin(currentQuestionId, stdinInput.value);
-  }, 300);
-});
-
-// Immediate save before reload or accidental tab close
-window.addEventListener("beforeunload", () => {
-  if (monacoEditor && !isSettingValue) {
-    saveCode(currentQuestionId, monacoEditor.getValue());
+  if (monacoEditor) {
+    isSettingValue = true;
+    monacoEditor.setValue("");
+    isSettingValue = false;
+    updateSaveStatus("saved");
   }
-  if (stdinInput) {
-    saveStdin(currentQuestionId, stdinInput.value);
-  }
-});
+}
 
-btnFormat.addEventListener("click", () => {
+// ---- Format Code ----
+function handleFormat() {
   if (monacoEditor) {
     monacoEditor.getAction("editor.action.formatDocument")?.run();
   }
-});
+}
 
+// ---- Event Listeners ----
+btnRun.addEventListener("click", () => runCode());
+btnReset.addEventListener("click", handleReset);
+btnFormat.addEventListener("click", handleFormat);
 btnClearOutput.addEventListener("click", clearOutput);
+btnCloseOutput.addEventListener("click", hideOutputDrawer);
 
-// Verify expected output on change
-expectedOutput.addEventListener("input", () => {
-  const outputEl = outputDisplay.querySelector(".output-success");
-  if (outputEl) {
-    checkOutput(outputEl.textContent);
+// Language Toggle Buttons (Side-by-Side: Java | Python)
+btnLangJava.addEventListener("click", () => setLanguage("java"));
+btnLangPython.addEventListener("click", () => setLanguage("python"));
+
+// Font size buttons
+if (btnFontInc) btnFontInc.addEventListener("click", () => setFontSize(currentFontSize + 1));
+if (btnFontDec) btnFontDec.addEventListener("click", () => setFontSize(currentFontSize - 1));
+if (fontSizeDisplay) fontSizeDisplay.textContent = `${currentFontSize}px`;
+
+// Environment selector toggle
+const envBtns = document.querySelectorAll(".env-toggle-btn");
+if (envSelector) {
+  envSelector.value = "cloud"; // default
+  envBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      envBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      envSelector.value = btn.dataset.value;
+    });
+  });
+}
+
+// Save before reload or tab close
+window.addEventListener("beforeunload", () => {
+  if (monacoEditor && !isSettingValue) {
+    saveCode(currentQuestionId, currentLanguage, monacoEditor.getValue());
   }
 });
 
-// ---- Font Size Controls ----
-if (btnFontInc) {
-  btnFontInc.addEventListener("click", () => setFontSize(currentFontSize + 1));
-}
-if (btnFontDec) {
-  btnFontDec.addEventListener("click", () => setFontSize(currentFontSize - 1));
-}
-if (fontSizeDisplay) {
-  fontSizeDisplay.textContent = `${currentFontSize}px`;
-}
+// Window resize layout
+window.addEventListener("resize", () => {
+  if (monacoEditor) monacoEditor.layout();
+});
 
-// ---- Keyboard Shortcuts ----
+// Keyboard Shortcuts
 document.addEventListener("keydown", (e) => {
-  // Ctrl+Enter: Run code
+  // Ctrl + Enter: Run code
   if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
     e.preventDefault();
     runCode();
   }
-  // Ctrl + Plus / Equal: Increase font size
+  // Escape: Close output drawer
+  else if (e.key === "Escape" && ioSection.style.display !== "none") {
+    e.preventDefault();
+    hideOutputDrawer();
+  }
+  // Alt + J: Switch to Java
+  else if (e.altKey && (e.key === "j" || e.key === "J")) {
+    e.preventDefault();
+    setLanguage("java");
+  }
+  // Alt + P: Switch to Python
+  else if (e.altKey && (e.key === "p" || e.key === "P")) {
+    e.preventDefault();
+    setLanguage("python");
+  }
+  // Ctrl + Plus / Equal: Font +
   else if ((e.ctrlKey || e.metaKey) && (e.key === "=" || e.key === "+")) {
     e.preventDefault();
     setFontSize(currentFontSize + 1);
   }
-  // Ctrl + Minus: Decrease font size
+  // Ctrl + Minus: Font -
   else if ((e.ctrlKey || e.metaKey) && (e.key === "-" || e.key === "_")) {
     e.preventDefault();
     setFontSize(currentFontSize - 1);
   }
-  // Ctrl + 0: Reset font size to default (15px)
+  // Ctrl + 0: Default font size
   else if ((e.ctrlKey || e.metaKey) && e.key === "0") {
     e.preventDefault();
     setFontSize(15);
   }
 });
 
-// ---- Initialize ----
-renderTemplateList();
-initMonaco();
-
-// ---- Layout Resizers ----
-const sidebar = document.getElementById("sidebar");
-const rightPane = document.getElementById("right-pane");
-const gutterH = document.getElementById("gutter-h");
-
-const editorSection = document.getElementById("editor-section");
-const ioSection = document.getElementById("io-section");
-const gutterV = document.getElementById("gutter-v");
-
-// Horizontal resizing
+// ---- Resizing Gutters ----
 let isResizingH = false;
-gutterH.addEventListener("mousedown", (e) => {
+let isResizingV = false;
+
+// Horizontal Sidebar Resizer
+gutterH.addEventListener("mousedown", () => {
   isResizingH = true;
   document.body.style.cursor = "col-resize";
   gutterH.classList.add("active");
 });
 
-// Vertical resizing
-let isResizingV = false;
-gutterV.addEventListener("mousedown", (e) => {
+// Vertical IO Resizer
+gutterV.addEventListener("mousedown", () => {
   isResizingV = true;
   document.body.style.cursor = "row-resize";
   gutterV.classList.add("active");
@@ -1118,7 +1230,7 @@ document.addEventListener("mousemove", (e) => {
   if (isResizingH) {
     const totalWidth = document.getElementById("app-main").clientWidth;
     const newWidth = (e.clientX / totalWidth) * 100;
-    if (newWidth > 15 && newWidth < 85) {
+    if (newWidth > 15 && newWidth < 80) {
       sidebar.style.width = `${newWidth}%`;
     }
   } else if (isResizingV) {
@@ -1140,9 +1252,11 @@ document.addEventListener("mouseup", () => {
     document.body.style.cursor = "default";
     gutterH.classList.remove("active");
     gutterV.classList.remove("active");
-    if (monacoEditor) {
-      // Trigger a resize on Monaco so it fills the new container size
-      monacoEditor.layout();
-    }
+
+    if (monacoEditor) monacoEditor.layout();
   }
 });
+
+// ---- Initialize Application ----
+renderTemplateList();
+initMonaco();

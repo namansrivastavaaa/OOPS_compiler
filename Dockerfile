@@ -1,8 +1,9 @@
 FROM node:20-bookworm-slim
 
-# Install Java (OpenJDK)
+# Install Java (OpenJDK) and Python 3
 RUN apt-get update && \
-    apt-get install -y default-jdk && \
+    apt-get install -y default-jdk python3 && \
+    ln -sf /usr/bin/python3 /usr/bin/python && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
