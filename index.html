@@ -185,19 +185,39 @@
 
   <!-- Help Modal -->
   <dialog id="run-locally-modal"
-    style="padding: 24px; border-radius: 10px; border: 1px solid var(--border-color, #272a38); max-width: 520px; background: var(--bg-panel, #1a1c24); color: var(--text-primary, #f1f5f9); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);">
-    <h3 style="margin-top: 0; margin-bottom: 14px; font-size: 18px; color: #fff;">How to Run Locally (Java & Python)</h3>
-    <p style="font-size: 13.5px; color: #94a3b8; line-height: 1.5;">To execute Java and Python code with zero cloud delay, run the local backend server on your machine:</p>
-    <ol style="line-height: 1.7; font-size: 13.5px; color: #cbd5e1; padding-left: 20px;">
-      <li>Make sure you have <a href="https://nodejs.org/" target="_blank" style="color: #38bdf8; text-decoration: none;">Node.js</a> installed.</li>
+    style="padding: 24px; border-radius: 12px; border: 1px solid var(--border-color, #272a38); max-width: 560px; background: var(--bg-panel, #1a1c24); color: var(--text-primary, #f1f5f9); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);">
+    <h3 style="margin-top: 0; margin-bottom: 12px; font-size: 19px; color: #fff; display: flex; align-items: center; gap: 8px;">
+      <span>💻</span> How to Run Locally (Java & Python)
+    </h3>
+    <p style="font-size: 13.5px; color: #94a3b8; line-height: 1.5; margin-bottom: 16px;">
+      Execute code instantly with <strong>zero cloud delay</strong> by running the backend server locally on your machine:
+    </p>
+
+    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color, #272a38); border-radius: 8px; padding: 12px 14px; margin-bottom: 16px;">
+      <div style="font-size: 12px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">
+        🔗 GitHub Repository:
+      </div>
+      <a href="https://github.com/namansrivastavaaa/OOPS_compiler" target="_blank" rel="noopener noreferrer" style="color: #60a5fa; text-decoration: none; font-size: 13.5px; font-weight: 600; word-break: break-all;">
+        https://github.com/namansrivastavaaa/OOPS_compiler
+      </a>
+    </div>
+
+    <ol style="line-height: 1.8; font-size: 13.5px; color: #cbd5e1; padding-left: 20px; margin: 0 0 20px 0;">
+      <li>Make sure you have <a href="https://nodejs.org/" target="_blank" style="color: #38bdf8; text-decoration: none;"><strong>Node.js</strong></a> installed.</li>
       <li>For <strong>Java</strong>: Ensure JDK is installed (<code>javac</code> and <code>java</code> in PATH).</li>
       <li>For <strong>Python</strong>: Ensure Python 3 is installed (<code>python</code> in PATH).</li>
-      <li>Open your terminal in the project directory.</li>
-      <li>Start the server: <code style="background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; color: #34d399;">node Backend/server.js</code></li>
-      <li>In the top right of this page, switch <strong>Server</strong> to <strong>Local</strong>.</li>
+      <li><strong>Clone the repository</strong> and navigate into it:
+        <pre style="background: #0d0f14; border: 1px solid #272a38; border-radius: 6px; padding: 8px 12px; margin: 6px 0; color: #38bdf8; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; overflow-x: auto;">git clone https://github.com/namansrivastavaaa/OOPS_compiler.git
+cd OOPS_compiler</pre>
+      </li>
+      <li>Install dependencies and <strong>run the backend server</strong>:
+        <pre style="background: #0d0f14; border: 1px solid #272a38; border-radius: 6px; padding: 8px 12px; margin: 6px 0; color: #34d399; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; overflow-x: auto;">npm install
+node Backend/server.js</pre>
+      </li>
+      <li>Open <code>index.html</code> in your browser and switch <strong>Server</strong> to <strong>Local</strong> in the top header!</li>
     </ol>
-    <div style="text-align: right; margin-top: 22px;">
-      <button id="btn-close-modal" class="btn" style="background: #6366f1; color: #fff; border-color: #6366f1;">Close</button>
+    <div style="text-align: right; margin-top: 10px;">
+      <button id="btn-close-modal" class="btn" style="background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; border: 1px solid #6366f1; padding: 6px 18px; font-weight: 600; border-radius: 6px;">Close</button>
     </div>
   </dialog>
 
