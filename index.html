@@ -121,32 +121,50 @@
       <!-- Bottom: Execution Results (Appears ONLY when code is run) -->
       <section id="io-section" class="panel" style="display: none;">
 
-        <!-- Actual Output Block -->
-        <div class="io-block" style="flex: 1.15;">
-          <div class="panel-header">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-weight: 600; color: #fff;">Output</span>
-              <span id="output-meta" style="font-size: 11px; color: var(--text-muted);"></span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <button class="btn btn-icon btn-small" id="btn-clear-output" title="Clear Output">Clear</button>
-              <button class="btn btn-icon btn-small" id="btn-close-output" title="Close Output Drawer (Esc)" style="color: #94a3b8;">✕ Close</button>
-            </div>
+        <!-- Test Cases Control Bar -->
+        <div class="test-cases-header" id="test-cases-header">
+          <div class="test-cases-left">
+            <span class="test-cases-label">Test Cases:</span>
+            <div class="test-cases-tabs" id="test-cases-tabs"></div>
           </div>
-          <div id="output-display" class="io-output-text">
-            <span class="output-placeholder">Output will appear here after running your code...</span>
+          <div class="test-cases-right">
+            <span id="test-cases-summary" class="test-cases-summary" style="display: none;"></span>
+            <button class="btn btn-small btn-toggle-hidden" id="btn-toggle-hidden-io" title="Show or hide hidden test cases">
+              <span class="eye-icon">👁️</span>
+              <span class="btn-text">Show Hidden Test Cases</span>
+            </button>
+            <button class="btn btn-icon btn-small" id="btn-clear-output" title="Clear Output">Clear</button>
+            <button class="btn btn-icon btn-small" id="btn-close-output" title="Close Output Drawer (Esc)" style="color: #94a3b8;">✕ Close</button>
           </div>
         </div>
 
-        <!-- Expected Output Block -->
-        <div class="io-block" style="flex: 1;">
-          <div class="panel-header">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span style="font-weight: 600; color: #fff;">Expected Output</span>
-              <span class="match-badge" id="match-badge"></span>
+        <div class="io-content-wrapper">
+          <!-- Actual Output Block -->
+          <div class="io-block" style="flex: 1.15;">
+            <div class="panel-header">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-weight: 600; color: #fff;">Output</span>
+                <span id="output-meta" style="font-size: 11px; color: var(--text-muted);"></span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span id="active-testcase-label" style="font-size: 11px; color: var(--text-secondary); font-weight: 500;"></span>
+              </div>
+            </div>
+            <div id="output-display" class="io-output-text">
+              <span class="output-placeholder">Output will appear here after running your code...</span>
             </div>
           </div>
-          <div id="expected-output-display" class="io-output-text expected-text"></div>
+
+          <!-- Expected Output Block -->
+          <div class="io-block" style="flex: 1;">
+            <div class="panel-header">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-weight: 600; color: #fff;">Expected Output</span>
+                <span class="match-badge" id="match-badge"></span>
+              </div>
+            </div>
+            <div id="expected-output-display" class="io-output-text expected-text"></div>
+          </div>
         </div>
 
       </section>

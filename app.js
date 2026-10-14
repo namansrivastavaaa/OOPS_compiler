@@ -93,7 +93,141 @@ ODI`,
 Players in ODI sorted by id desc:
 4 Jadeja
 3 Bumrah
+1 Virat`,
+    testCases: [
+      {
+        id: 1,
+        name: "Case 1",
+        isPrivate: false,
+        stdin: `4
+1
+Virat
+12000
+Batsman
+ODI
+2
+Rohit
+9500
+Batsman
+T20
+3
+Bumrah
+200
+Bowler
+ODI
+4
+Jadeja
+2500
+Batsman
+ODI
+Batsman
+ODI`,
+        expectedOutput: `Lowest runs by Batsman = 2500
+Players in ODI sorted by id desc:
+4 Jadeja
+3 Bumrah
 1 Virat`
+      },
+      {
+        id: 2,
+        name: "Case 2",
+        isPrivate: true,
+        stdin: `4
+10
+Rahul
+4500
+Batsman
+T20
+20
+Shami
+800
+Bowler
+Test
+30
+Ashwin
+1200
+AllRounder
+Test
+40
+Pant
+3800
+WicketKeeper
+Test
+Bowler
+Test`,
+        expectedOutput: `Lowest runs by Bowler = 800
+Players in Test sorted by id desc:
+40 Pant
+30 Ashwin
+20 Shami`
+      },
+      {
+        id: 3,
+        name: "Case 3",
+        isPrivate: true,
+        stdin: `5
+101
+Hardik
+3200
+AllRounder
+T20
+102
+Axar
+1800
+AllRounder
+T20
+103
+Gill
+2200
+Batsman
+ODI
+104
+Washington
+1500
+AllRounder
+Test
+105
+Surya
+4100
+Batsman
+T20
+allrounder
+t20`,
+        expectedOutput: `Lowest runs by allrounder = 1500
+Players in t20 sorted by id desc:
+105 Surya
+102 Axar
+101 Hardik`
+      },
+      {
+        id: 4,
+        name: "Case 4",
+        isPrivate: true,
+        stdin: `3
+1
+Dhoni
+10500
+WicketKeeper
+ODI
+2
+Yuvraj
+8700
+AllRounder
+ODI
+3
+Zaheer
+600
+Bowler
+ODI
+WicketKeeper
+ODI`,
+        expectedOutput: `Lowest runs by WicketKeeper = 10500
+Players in ODI sorted by id desc:
+3 Zaheer
+2 Yuvraj
+1 Dhoni`
+      }
+    ]
   },
   {
     id: 2,
@@ -182,7 +316,133 @@ Windows`,
     expectedOutput: `Count of Dell laptops with rating > 3 = 2
 Laptops with OS Windows sorted by id desc:
 2 HP
+1 Dell`,
+    testCases: [
+      {
+        id: 1,
+        name: "Case 1",
+        isPrivate: false,
+        stdin: `4
+1
+Dell
+Windows
+55000
+4
+2
+HP
+Windows
+48000
+3
+3
+Apple
+MacOS
+120000
+5
+4
+Dell
+Linux
+62000
+5
+Dell
+Windows`,
+        expectedOutput: `Count of Dell laptops with rating > 3 = 2
+Laptops with OS Windows sorted by id desc:
+2 HP
 1 Dell`
+      },
+      {
+        id: 2,
+        name: "Case 2",
+        isPrivate: true,
+        stdin: `4
+101
+Lenovo
+Windows
+65000
+5
+102
+Asus
+Linux
+72000
+4
+103
+Lenovo
+Linux
+58000
+4
+104
+Acer
+Windows
+45000
+2
+Lenovo
+Linux`,
+        expectedOutput: `Count of Lenovo laptops with rating > 3 = 2
+Laptops with OS Linux sorted by id desc:
+103 Lenovo
+102 Asus`
+      },
+      {
+        id: 3,
+        name: "Case 3",
+        isPrivate: true,
+        stdin: `4
+1
+Apple
+MacOS
+150000
+3
+2
+Apple
+MacOS
+180000
+2
+3
+Apple
+MacOS
+210000
+5
+4
+Dell
+Windows
+60000
+4
+Apple
+MacOS`,
+        expectedOutput: `Count of Apple laptops with rating > 3 = 1
+Laptops with OS MacOS sorted by id desc:
+3 Apple
+2 Apple
+1 Apple`
+      },
+      {
+        id: 4,
+        name: "Case 4",
+        isPrivate: true,
+        stdin: `3
+5
+hp
+windows
+42000
+4
+6
+HP
+Linux
+51000
+5
+7
+MSI
+windows
+85000
+4
+HP
+WINDOWS`,
+        expectedOutput: `Count of HP laptops with rating > 3 = 2
+Laptops with OS WINDOWS sorted by id desc:
+7 MSI
+5 hp`
+      }
+    ]
   },
   {
     id: 3,
@@ -246,7 +506,7 @@ Free</div>
 <div class="sample-label">Sample Output</div>
 <div class="sample-block">Total rooms booked in month 05 = 5
 Second hotel with WiFi option Free by bill amount descending:
-104 Sunset Hotel</div>`,
+101 Royal Stay</div>`,
     code: "",
     stdin: `4
 101
@@ -277,7 +537,149 @@ Free
 Free`,
     expectedOutput: `Total rooms booked in month 05 = 5
 Second hotel with WiFi option Free by bill amount descending:
-104 Sunset Hotel`
+101 Royal Stay`,
+    testCases: [
+      {
+        id: 1,
+        name: "Case 1",
+        isPrivate: false,
+        stdin: `4
+101
+Royal Stay
+12-05-2024
+3
+Free
+2500
+102
+Green Park
+16-08-2024
+5
+Paid
+4200
+103
+City Inn
+05-05-2024
+2
+Free
+1800
+104
+Sunset Hotel
+18-09-2024
+4
+Free
+3600
+05
+Free`,
+        expectedOutput: `Total rooms booked in month 05 = 5
+Second hotel with WiFi option Free by bill amount descending:
+101 Royal Stay`
+      },
+      {
+        id: 2,
+        name: "Case 2",
+        isPrivate: true,
+        stdin: `4
+201
+Grand Palace
+10-11-2023
+6
+Free
+8500
+202
+Ocean Breeze
+15-11-2023
+4
+Free
+9200
+203
+Mountain View
+22-12-2023
+3
+Paid
+4500
+204
+Sea View
+08-11-2023
+5
+Free
+6000
+11
+Free`,
+        expectedOutput: `Total rooms booked in month 11 = 15
+Second hotel with WiFi option Free by bill amount descending:
+201 Grand Palace`
+      },
+      {
+        id: 3,
+        name: "Case 3",
+        isPrivate: true,
+        stdin: `4
+11
+Lake Resort
+01-03-2024
+8
+Paid
+12000
+12
+Pine Villa
+14-04-2024
+2
+Paid
+3500
+13
+Hill Top
+25-03-2024
+7
+Paid
+8000
+14
+River Side
+30-03-2024
+4
+Paid
+9500
+03
+Paid`,
+        expectedOutput: `Total rooms booked in month 03 = 19
+Second hotel with WiFi option Paid by bill amount descending:
+14 River Side`
+      },
+      {
+        id: 4,
+        name: "Case 4",
+        isPrivate: true,
+        stdin: `4
+1
+Hotel Alpha
+12-07-2024
+2
+FREE
+3000
+2
+Hotel Beta
+15-07-2024
+3
+free
+7000
+3
+Hotel Gamma
+20-07-2024
+1
+Free
+5000
+4
+Hotel Delta
+25-08-2024
+5
+Paid
+8000
+07
+free`,
+        expectedOutput: `Total rooms booked in month 07 = 6
+Second hotel with WiFi option free by bill amount descending:
+3 Hotel Gamma`
+      }
+    ]
   },
   {
     id: 4,
@@ -366,7 +768,134 @@ English`,
     expectedOutput: `Highest rated Sci-Fi movie: 1 Inception 8.8
 Movies in English sorted by rating desc:
 1 Inception 8.8
+2 Interstellar 8.6`,
+    testCases: [
+      {
+        id: 1,
+        name: "Case 1",
+        isPrivate: false,
+        stdin: `4
+1
+Inception
+Sci-Fi
+8.8
+English
+2
+Interstellar
+Sci-Fi
+8.6
+English
+3
+Dangal
+Drama
+8.4
+Hindi
+4
+3Idiots
+Drama
+8.1
+Hindi
+Sci-Fi
+English`,
+        expectedOutput: `Highest rated Sci-Fi movie: 1 Inception 8.8
+Movies in English sorted by rating desc:
+1 Inception 8.8
 2 Interstellar 8.6`
+      },
+      {
+        id: 2,
+        name: "Case 2",
+        isPrivate: true,
+        stdin: `4
+1
+Avatar
+Action
+7.8
+English
+2
+Gladiator
+Action
+8.5
+English
+3
+Parasite
+Thriller
+8.6
+Korean
+4
+Oldboy
+Thriller
+8.4
+Korean
+Action
+Korean`,
+        expectedOutput: `Highest rated Action movie: 2 Gladiator 8.5
+Movies in Korean sorted by rating desc:
+3 Parasite 8.6
+4 Oldboy 8.4`
+      },
+      {
+        id: 3,
+        name: "Case 3",
+        isPrivate: true,
+        stdin: `4
+10
+RRR
+Action
+8.0
+Telugu
+20
+Baahubali
+Action
+8.2
+Telugu
+30
+Pushpa
+Action
+7.6
+Telugu
+40
+KGF
+Action
+8.3
+Kannada
+Action
+Telugu`,
+        expectedOutput: `Highest rated Action movie: 40 KGF 8.3
+Movies in Telugu sorted by rating desc:
+20 Baahubali 8.2
+10 RRR 8.0
+30 Pushpa 7.6`
+      },
+      {
+        id: 4,
+        name: "Case 4",
+        isPrivate: true,
+        stdin: `3
+101
+Hera Pheri
+Comedy
+8.2
+Hindi
+102
+Dhamaal
+Comedy
+7.4
+Hindi
+103
+Golmaal
+Comedy
+7.5
+Hindi
+comedy
+hindi`,
+        expectedOutput: `Highest rated comedy movie: 101 Hera Pheri 8.2
+Movies in hindi sorted by rating desc:
+101 Hera Pheri 8.2
+103 Golmaal 7.5
+102 Dhamaal 7.4`
+      }
+    ]
   },
   {
     id: 5,
@@ -457,7 +986,135 @@ Gold
 Policies with tenure >= 4 sorted by premium asc:
 3 Charlie 12000.0
 1 Alice 15000.0
+4 Diana 25000.0`,
+    testCases: [
+      {
+        id: 1,
+        name: "Case 1",
+        isPrivate: false,
+        stdin: `4
+1
+Alice
+Gold
+15000
+5
+2
+Bob
+Silver
+8000
+3
+3
+Charlie
+Gold
+12000
+4
+4
+Diana
+Platinum
+25000
+10
+Gold
+4`,
+        expectedOutput: `Total premium for Gold = 27000.0
+Policies with tenure >= 4 sorted by premium asc:
+3 Charlie 12000.0
+1 Alice 15000.0
 4 Diana 25000.0`
+      },
+      {
+        id: 2,
+        name: "Case 2",
+        isPrivate: true,
+        stdin: `4
+10
+Bruce
+Term
+10000
+15
+20
+Clark
+Health
+8500
+10
+30
+Barry
+Term
+12500
+20
+40
+Arthur
+Health
+6500
+8
+Term
+10`,
+        expectedOutput: `Total premium for Term = 22500.0
+Policies with tenure >= 10 sorted by premium asc:
+20 Clark 8500.0
+10 Bruce 10000.0
+30 Barry 12500.0`
+      },
+      {
+        id: 3,
+        name: "Case 3",
+        isPrivate: true,
+        stdin: `4
+1
+John
+Life
+18000
+7
+2
+Jane
+Life
+22000
+12
+3
+Jack
+Vehicle
+5000
+2
+4
+Jill
+Life
+14000
+5
+Life
+6`,
+        expectedOutput: `Total premium for Life = 54000.0
+Policies with tenure >= 6 sorted by premium asc:
+1 John 18000.0
+2 Jane 22000.0`
+      },
+      {
+        id: 4,
+        name: "Case 4",
+        isPrivate: true,
+        stdin: `3
+101
+Peter
+Health
+9500
+5
+102
+Tony
+Premium
+50000
+10
+103
+Steve
+health
+11500
+8
+health
+5`,
+        expectedOutput: `Total premium for health = 21000.0
+Policies with tenure >= 5 sorted by premium asc:
+101 Peter 9500.0
+103 Steve 11500.0
+102 Tony 50000.0`
+      }
+    ]
   },
   {
     id: 6,
@@ -554,7 +1211,108 @@ ground
 1000.0
 1
 Davidoff
+1015.0`,
+    testCases: [
+      {
+        id: 1,
+        name: "Case 1",
+        isPrivate: false,
+        stdin: `3
+1
+Davidoff
+instant
+1015.0
+2
+Barral-aged Coffee
+ground
+1000.0
+3
+Bru
+instant
+100.0
+instant`,
+        expectedOutput: `1
+Davidoff
+instant
+1015.0
+2
+Barral-aged Coffee
+ground
+1000.0
+1
+Davidoff
 1015.0`
+      },
+      {
+        id: 2,
+        name: "Case 2",
+        isPrivate: true,
+        stdin: `4
+1
+Espresso
+Robusta
+250.0
+2
+Cappuccino
+Arabica
+450.0
+3
+Latte
+Arabica
+500.0
+4
+Americano
+Robusta
+300.0
+Arabica`,
+        expectedOutput: `2
+Cappuccino
+Arabica
+450.0
+3
+Latte
+Arabica
+500.0
+3
+Latte
+500.0`
+      },
+      {
+        id: 3,
+        name: "Case 3",
+        isPrivate: true,
+        stdin: `3
+10
+Nescafe
+instant
+150.0
+20
+TataGrand
+filter
+250.0
+30
+Continental
+instant
+200.0
+Mocha`,
+        expectedOutput: `20
+TataGrand
+filter
+250.0
+30
+Continental
+instant
+200.0
+No Coffee Found`
+      },
+      {
+        id: 4,
+        name: "Case 4",
+        isPrivate: true,
+        stdin: `0`,
+        expectedOutput: `No Coffee Found`
+      }
+    ]
   },
   {
     id: 7,
@@ -562,7 +1320,16 @@ Davidoff
     description: "", // Dynamically updated per language
     code: "",
     stdin: "",
-    expectedOutput: ""
+    expectedOutput: "",
+    testCases: [
+      {
+        id: 1,
+        name: "Custom",
+        isPrivate: false,
+        stdin: "",
+        expectedOutput: ""
+      }
+    ]
   }
 ];
 
@@ -632,6 +1399,16 @@ const outputDisplay = document.getElementById("output-display");
 const expectedOutputDisplay = document.getElementById("expected-output-display");
 const matchBadge = document.getElementById("match-badge");
 const outputMeta = document.getElementById("output-meta");
+
+// Test Cases Elements & State
+const testCasesTabsEl = document.getElementById("test-cases-tabs");
+const testCasesSummaryEl = document.getElementById("test-cases-summary");
+const btnToggleHiddenIo = document.getElementById("btn-toggle-hidden-io");
+const activeTestCaseLabel = document.getElementById("active-testcase-label");
+
+let showHiddenTestCases = false;
+let activeTestCaseIndex = 0;
+let lastRunResults = []; // results per test case for current question
 
 const btnRun = document.getElementById("btn-run");
 const btnRunText = document.getElementById("btn-run-text");
@@ -743,6 +1520,223 @@ function getQuestionDescription(q) {
   return q.description;
 }
 
+// ---- Hidden Test Cases & Tabs Handlers ----
+function toggleHiddenTestCases() {
+  showHiddenTestCases = !showHiddenTestCases;
+  updateHiddenToggleButtons();
+  updateSidebarHiddenSection();
+  if (ioSection && ioSection.style.display !== "none") {
+    displayTestCase(activeTestCaseIndex);
+  }
+}
+
+function updateHiddenToggleButtons() {
+  const ioBtn = document.getElementById("btn-toggle-hidden-io");
+  if (ioBtn) {
+    ioBtn.classList.toggle("active", showHiddenTestCases);
+    const eyeIcon = ioBtn.querySelector(".eye-icon");
+    const btnText = ioBtn.querySelector(".btn-text");
+    if (eyeIcon) eyeIcon.textContent = showHiddenTestCases ? "🙈" : "👁️";
+    if (btnText) btnText.textContent = showHiddenTestCases ? "Hide Hidden Test Cases" : "Show Hidden Test Cases";
+  }
+
+  const sideBtn = document.getElementById("btn-toggle-hidden-side");
+  if (sideBtn) {
+    sideBtn.classList.toggle("active", showHiddenTestCases);
+    const eyeIcon = sideBtn.querySelector(".eye-icon");
+    const btnText = sideBtn.querySelector(".btn-text");
+    if (eyeIcon) eyeIcon.textContent = showHiddenTestCases ? "🙈" : "👁️";
+    if (btnText) btnText.textContent = showHiddenTestCases ? "Hide Hidden Test Cases" : "Show Hidden Test Cases";
+  }
+}
+
+function updateSidebarHiddenSection() {
+  const sideBody = document.getElementById("private-testcases-content");
+  if (sideBody) {
+    sideBody.style.display = showHiddenTestCases ? "flex" : "none";
+  }
+}
+
+function renderSidebarHiddenCases(q) {
+  if (!q || !q.testCases) return;
+  const privateCases = q.testCases.filter(c => c.isPrivate);
+  if (privateCases.length === 0) return;
+
+  const cardHtml = `
+    <div class="private-testcases-box">
+      <div class="private-testcases-header">
+        <div class="private-title">
+          <span class="private-badge">🔒 3 Private Test Cases</span>
+          <span class="private-sub">Hidden verification cases</span>
+        </div>
+        <button class="btn btn-small btn-toggle-hidden ${showHiddenTestCases ? 'active' : ''}" id="btn-toggle-hidden-side" title="Show or hide private test cases">
+          <span class="eye-icon">${showHiddenTestCases ? "🙈" : "👁️"}</span>
+          <span class="btn-text">${showHiddenTestCases ? "Hide Hidden Test Cases" : "Show Hidden Test Cases"}</span>
+        </button>
+      </div>
+      <div class="private-testcases-content" id="private-testcases-content" style="display: ${showHiddenTestCases ? 'flex' : 'none'};">
+        ${privateCases.map((c) => `
+          <div class="private-testcase-card">
+            <div class="private-card-title">
+              <span>🔒 ${escapeHtml(c.name)}</span>
+              <span style="font-size: 10.5px; color: #a855f7; font-weight: 500;">Private Test Case</span>
+            </div>
+            <div class="sample-label">Input</div>
+            <div class="sample-block">${escapeHtml(c.stdin)}</div>
+            <div class="sample-label">Expected Output</div>
+            <div class="sample-block">${escapeHtml(c.expectedOutput)}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  questionDisplayEl.insertAdjacentHTML("beforeend", cardHtml);
+
+  const sideBtn = document.getElementById("btn-toggle-hidden-side");
+  if (sideBtn) {
+    sideBtn.addEventListener("click", toggleHiddenTestCases);
+  }
+}
+
+function renderTestCasesTabs() {
+  const q = QUESTIONS.find(q => q.id === currentQuestionId);
+  const cases = (q && q.testCases && q.testCases.length) ? q.testCases : [
+    { id: 1, name: "Case 1", isPrivate: false, stdin: q ? q.stdin : "", expectedOutput: q ? q.expectedOutput : "" }
+  ];
+
+  if (!testCasesTabsEl) return;
+  testCasesTabsEl.innerHTML = "";
+
+  cases.forEach((c, idx) => {
+    const tab = document.createElement("button");
+    tab.className = `test-case-tab${idx === activeTestCaseIndex ? " active" : ""}`;
+    tab.dataset.index = idx;
+
+    let statusHtml = "";
+    if (lastRunResults[idx]) {
+      const res = lastRunResults[idx];
+      if (res.passed) {
+        statusHtml = `<span class="tab-status-icon passed">✓</span>`;
+      } else {
+        statusHtml = `<span class="tab-status-icon failed">✗</span>`;
+      }
+    }
+
+    tab.innerHTML = `
+      <span>${escapeHtml(c.name)}</span>
+      ${c.isPrivate ? '<span class="tab-badge-private">🔒 Private</span>' : ''}
+      ${statusHtml}
+    `;
+
+    tab.addEventListener("click", () => {
+      displayTestCase(idx);
+    });
+
+    testCasesTabsEl.appendChild(tab);
+  });
+
+  if (testCasesSummaryEl) {
+    if (lastRunResults.length > 0) {
+      testCasesSummaryEl.style.display = "inline-flex";
+      const passedCount = lastRunResults.filter(r => r && r.passed).length;
+      const totalCount = lastRunResults.length;
+      testCasesSummaryEl.textContent = `${passedCount}/${totalCount} Passed`;
+      testCasesSummaryEl.className = `test-cases-summary ${passedCount === totalCount ? "all-passed" : "has-failed"}`;
+    } else {
+      testCasesSummaryEl.style.display = "none";
+    }
+  }
+}
+
+function displayTestCase(index) {
+  activeTestCaseIndex = index;
+  const q = QUESTIONS.find(q => q.id === currentQuestionId);
+  const cases = (q && q.testCases && q.testCases.length) ? q.testCases : [
+    { id: 1, name: "Case 1", isPrivate: false, stdin: q ? q.stdin : "", expectedOutput: q ? q.expectedOutput : "" }
+  ];
+  const c = cases[index] || cases[0];
+
+  if (testCasesTabsEl) {
+    testCasesTabsEl.querySelectorAll(".test-case-tab").forEach((tab, idx) => {
+      tab.classList.toggle("active", idx === index);
+    });
+  }
+
+  if (activeTestCaseLabel) {
+    activeTestCaseLabel.textContent = `${c.name}${c.isPrivate ? " (Private)" : " (Sample)"}`;
+  }
+
+  const result = lastRunResults[index];
+
+  // Expected output display
+  if (c.isPrivate && !showHiddenTestCases) {
+    expectedOutputDisplay.innerHTML = `
+      <div class="hidden-case-lock-container">
+        <div class="lock-icon">🔒</div>
+        <div class="lock-title">Private / Hidden Test Case</div>
+        <div class="lock-subtitle">This test case's input and expected output are currently hidden.</div>
+        <button class="btn btn-reveal-inline" id="btn-reveal-inline">👁️ Show Hidden Test Case</button>
+      </div>
+    `;
+    const revealBtn = document.getElementById("btn-reveal-inline");
+    if (revealBtn) {
+      revealBtn.addEventListener("click", toggleHiddenTestCases);
+    }
+  } else {
+    expectedOutputDisplay.textContent = c.expectedOutput || "None specified";
+  }
+
+  // Actual output display
+  if (!result) {
+    outputDisplay.innerHTML = `<span class="output-placeholder">Run code to see results for ${escapeHtml(c.name)}...</span>`;
+    matchBadge.className = "match-badge";
+    matchBadge.textContent = "";
+    outputMeta.textContent = "";
+    return;
+  }
+
+  outputMeta.textContent = result.meta || "";
+
+  if (result.compileError) {
+    outputDisplay.innerHTML = `<span class="output-error">${escapeHtml(result.compileError)}</span>`;
+    matchBadge.className = "match-badge mismatch";
+    matchBadge.textContent = "✗ Compile Error";
+    return;
+  }
+
+  if (result.runtimeError) {
+    outputDisplay.innerHTML = `<span class="output-error">${escapeHtml(result.runtimeError)}</span>`;
+    if (result.output) {
+      outputDisplay.innerHTML += `\n${escapeHtml(result.output)}`;
+    }
+    matchBadge.className = "match-badge mismatch";
+    matchBadge.textContent = "✗ Runtime Error";
+    return;
+  }
+
+  const displayOutput = (result.output || "").replace(/\n$/, "");
+  outputDisplay.innerHTML = `<span class="output-success">${escapeHtml(displayOutput)}</span>`;
+
+  if (c.isPrivate && !showHiddenTestCases) {
+    if (result.passed) {
+      matchBadge.className = "match-badge match";
+      matchBadge.textContent = "✓ Passed (Hidden)";
+    } else {
+      matchBadge.className = "match-badge mismatch";
+      matchBadge.textContent = "✗ Failed (Hidden)";
+    }
+  } else {
+    if (result.passed) {
+      matchBadge.className = "match-badge match";
+      matchBadge.textContent = "✓ Match";
+    } else {
+      matchBadge.className = "match-badge mismatch";
+      matchBadge.textContent = "✗ Mismatch";
+    }
+  }
+}
+
 // ---- Question Loading ----
 function loadQuestion(id) {
   const q = QUESTIONS.find(q => q.id === id);
@@ -755,11 +1749,17 @@ function loadQuestion(id) {
 
   // Update sidebar
   questionDisplayEl.innerHTML = getQuestionDescription(q);
+  renderSidebarHiddenCases(q);
 
   // Update active item in sidebar list
   document.querySelectorAll(".template-item").forEach(el => {
     el.classList.toggle("active", parseInt(el.dataset.id, 10) === id);
   });
+
+  // Reset test case selection and results
+  activeTestCaseIndex = 0;
+  lastRunResults = [];
+  renderTestCasesTabs();
 
   // Load saved code for active language
   const saved = getSavedCode(id, currentLanguage);
@@ -968,7 +1968,7 @@ async function executeCode(language, sourceCode, stdin) {
   }
 }
 
-// ---- Run Code Engine ----
+// ---- Run Code Engine (Executes Public & Private Test Cases) ----
 let isRunning = false;
 
 async function runCode() {
@@ -982,74 +1982,121 @@ async function runCode() {
   }
 
   const q = QUESTIONS.find(q => q.id === currentQuestionId);
-  const expectedText = (q && q.expectedOutput) ? q.expectedOutput : "";
-  const sampleStdin = (q && q.stdin) ? q.stdin : "";
+  const cases = (q && q.testCases && q.testCases.length) ? q.testCases : [
+    { id: 1, name: "Case 1", isPrivate: false, stdin: (q ? q.stdin : ""), expectedOutput: (q ? q.expectedOutput : "") }
+  ];
 
-  // Show the output drawer
   showOutputDrawer();
-  expectedOutputDisplay.textContent = expectedText || "None specified";
+  lastRunResults = [];
+  renderTestCasesTabs();
 
   isRunning = true;
   const startTime = performance.now();
   const langLabel = currentLanguage === "python" ? "Python" : "Java";
 
-  // UI: Running State
   btnRun.classList.add("running");
   btnRun.innerHTML = `
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-    <span>Running ${langLabel}...</span>
+    <span>Running Test Cases...</span>
   `;
 
-  setStatus("running", `Running ${langLabel}...`);
-  outputDisplay.innerHTML = `<span class="output-placeholder">Executing ${langLabel} code...</span>`;
+  setStatus("running", `Testing ${cases.length} cases...`);
+  outputDisplay.innerHTML = `<span class="output-placeholder">Compiling and executing ${cases.length} test case${cases.length > 1 ? "s" : ""}...</span>`;
   matchBadge.className = "match-badge";
   matchBadge.textContent = "";
   outputMeta.textContent = "";
 
   try {
-    const result = await executeCode(currentLanguage, code, sampleStdin);
-    const elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
+    // 1. Run first test case to test compilation
+    const firstResult = await executeCode(currentLanguage, code, cases[0].stdin);
+    const elapsedFirst = ((performance.now() - startTime) / 1000).toFixed(2);
 
-    // Check for compilation failure
-    if (result.compile && result.compile.code !== 0) {
-      let errorMsg = result.compile.stderr || result.compile.output || "Compilation error";
-      
-      // Detection: if older cloud server tried to compile Python with javac
+    if (firstResult.compile && firstResult.compile.code !== 0) {
+      let errorMsg = firstResult.compile.stderr || firstResult.compile.output || "Compilation error";
       if (currentLanguage === "python" && errorMsg.includes("Main.java")) {
         errorMsg = `⚠️ Cloud Server does not have Python installed yet.\nPlease redeploy the updated server to Render, or switch Server to "Local" (run \`node Backend/server.js\`) to execute Python code!`;
       }
-      
-      outputDisplay.innerHTML = `<span class="output-error">${escapeHtml(errorMsg)}</span>`;
-      setStatus("error", `${langLabel} Error`);
-      execInfo.textContent = `${langLabel} compile failed • ${elapsed}s`;
-      outputMeta.textContent = `Compile Error (${elapsed}s)`;
-    } else if (result.run) {
-      const output = result.run.output || "";
-      const stderr = result.run.stderr || "";
 
-      if (result.run.code !== 0 && stderr) {
-        outputDisplay.innerHTML = `<span class="output-error">${escapeHtml(stderr)}</span>`;
-        if (output) {
-          outputDisplay.innerHTML += `\n${escapeHtml(output)}`;
-        }
-        setStatus("error", `${langLabel} Runtime Error`);
-        execInfo.textContent = `${langLabel} error (code ${result.run.code}) • ${elapsed}s`;
-        outputMeta.textContent = `Exit Code: ${result.run.code} (${elapsed}s)`;
-      } else {
-        const displayOutput = output.replace(/\n$/, "");
-        outputDisplay.innerHTML = `<span class="output-success">${escapeHtml(displayOutput)}</span>`;
-        setStatus("ready", "Success");
-        execInfo.textContent = `${langLabel} executed in ${elapsed}s`;
-        outputMeta.textContent = `${elapsed}s`;
-        
-        // Auto-verify with expected output
-        checkOutput(displayOutput, expectedText);
-      }
-    } else {
-      outputDisplay.innerHTML = '<span class="output-error">No response from execution engine.</span>';
-      setStatus("error", "Error");
-      execInfo.textContent = "";
+      cases.forEach(() => {
+        lastRunResults.push({
+          compileError: errorMsg,
+          passed: false,
+          meta: `Compile Error (${elapsedFirst}s)`
+        });
+      });
+
+      setStatus("error", `${langLabel} Error`);
+      execInfo.textContent = `${langLabel} compile failed • ${elapsedFirst}s`;
+      renderTestCasesTabs();
+      displayTestCase(0);
+      return;
     }
+
+    const checkCaseResult = (c, res, elapsed) => {
+      if (res.run) {
+        const output = res.run.output || "";
+        const stderr = res.run.stderr || "";
+        if (res.run.code !== 0 && stderr) {
+          return {
+            runtimeError: stderr,
+            output: output,
+            passed: false,
+            meta: `Exit Code: ${res.run.code} (${elapsed}s)`
+          };
+        } else {
+          const displayOutput = output.replace(/\n$/, "");
+          const actualNorm = displayOutput.trim().replace(/\r\n/g, "\n");
+          const expectedNorm = (c.expectedOutput || "").trim().replace(/\r\n/g, "\n");
+          const passed = expectedNorm ? (actualNorm === expectedNorm) : true;
+          return {
+            output: displayOutput,
+            passed: passed,
+            meta: `${elapsed}s`
+          };
+        }
+      }
+      return {
+        runtimeError: "No response from execution engine",
+        passed: false,
+        meta: "Error"
+      };
+    };
+
+    lastRunResults[0] = checkCaseResult(cases[0], firstResult, elapsedFirst);
+
+    // 2. Run remaining cases concurrently with Promise.all
+    if (cases.length > 1) {
+      const remainingPromises = cases.slice(1).map(async (c) => {
+        const caseStart = performance.now();
+        const res = await executeCode(currentLanguage, code, c.stdin);
+        const elapsedCase = ((performance.now() - caseStart) / 1000).toFixed(2);
+        return checkCaseResult(c, res, elapsedCase);
+      });
+
+      const remainingResults = await Promise.all(remainingPromises);
+      remainingResults.forEach((r, i) => {
+        lastRunResults[i + 1] = r;
+      });
+    }
+
+    const totalElapsed = ((performance.now() - startTime) / 1000).toFixed(2);
+    const passedCount = lastRunResults.filter(r => r && r.passed).length;
+    const totalCount = lastRunResults.length;
+
+    renderTestCasesTabs();
+
+    if (passedCount === totalCount) {
+      setStatus("ready", `All ${totalCount} Passed`);
+      execInfo.textContent = `All ${totalCount} test cases passed in ${totalElapsed}s`;
+    } else {
+      setStatus("error", `${passedCount}/${totalCount} Passed`);
+      execInfo.textContent = `${passedCount}/${totalCount} passed (${totalCount - passedCount} failed) • ${totalElapsed}s`;
+    }
+
+    // Auto-select first failing test case, or Case 1 if all passed
+    const firstFailIndex = lastRunResults.findIndex(r => r && !r.passed);
+    displayTestCase(firstFailIndex !== -1 ? firstFailIndex : 0);
+
   } catch (err) {
     outputDisplay.innerHTML = `<span class="output-error">Error: ${escapeHtml(err.message)}</span>`;
     setStatus("error", "Error");
@@ -1064,31 +2111,14 @@ async function runCode() {
   }
 }
 
-// ---- Output Verification against Expected Output ----
-function checkOutput(actual, expected) {
-  if (!expected) {
-    matchBadge.className = "match-badge";
-    matchBadge.textContent = "";
-    return;
-  }
-
-  const actualNorm = actual.trim().replace(/\r\n/g, "\n");
-  const expectedNorm = expected.trim().replace(/\r\n/g, "\n");
-
-  if (actualNorm === expectedNorm) {
-    matchBadge.className = "match-badge match";
-    matchBadge.textContent = "✓ Match";
-  } else {
-    matchBadge.className = "match-badge mismatch";
-    matchBadge.textContent = "✗ Mismatch";
-  }
-}
-
 function clearOutput() {
+  lastRunResults = [];
+  renderTestCasesTabs();
   outputDisplay.innerHTML = '<span class="output-placeholder">Output cleared. Run code again to see results.</span>';
   matchBadge.className = "match-badge";
   matchBadge.textContent = "";
   outputMeta.textContent = "";
+  displayTestCase(activeTestCaseIndex);
 }
 
 function setStatus(state, text) {
@@ -1134,6 +2164,9 @@ btnReset.addEventListener("click", handleReset);
 btnFormat.addEventListener("click", handleFormat);
 btnClearOutput.addEventListener("click", clearOutput);
 btnCloseOutput.addEventListener("click", hideOutputDrawer);
+if (btnToggleHiddenIo) {
+  btnToggleHiddenIo.addEventListener("click", toggleHiddenTestCases);
+}
 
 // Language Toggle Buttons (Side-by-Side: Java | Python)
 btnLangJava.addEventListener("click", () => setLanguage("java"));
@@ -1259,4 +2292,5 @@ document.addEventListener("mouseup", () => {
 
 // ---- Initialize Application ----
 renderTemplateList();
+loadQuestion(currentQuestionId);
 initMonaco();
