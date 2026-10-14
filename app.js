@@ -1316,6 +1316,224 @@ No Coffee Found`
   },
   {
     id: 7,
+    name: "Employee & Manager",
+    description: `<h3>Question 7: Employee & Manager Inheritance</h3>
+<p>Implement an inheritance hierarchy with base class <code>Employee</code> and derived class <code>Manager</code>.</p>
+
+<p><strong>1. Base Class: <code>Employee</code></strong></p>
+<ul>
+  <li>Private attributes: <code>id</code> (int), <code>name</code> (String), <code>salary</code> (double)</li>
+  <li>Parameterized constructor: <code>Employee(int id, String name, double salary)</code></li>
+  <li>Getters and setters for all attributes</li>
+  <li>Method <code>calculateAnnualSalary()</code>: returns <code>salary * 12</code></li>
+</ul>
+
+<p><strong>2. Derived Class: <code>Manager</code> (extends / inherits from <code>Employee</code>)</strong></p>
+<ul>
+  <li>Additional private attributes: <code>bonus</code> (double), <code>department</code> (String)</li>
+  <li>Parameterized constructor invoking base class constructor using <code>super</code></li>
+  <li>Getters and setters for <code>bonus</code> and <code>department</code></li>
+  <li>Overridden method <code>calculateAnnualSalary()</code>: returns <code>(salary * 12) + bonus</code></li>
+</ul>
+
+<p><strong>Method 1:</strong> <code>findManagerWithHighestAnnualSalary</code></p>
+<ul>
+  <li>Input: Manager[]</li>
+  <li>Find the manager with the highest total annual salary</li>
+  <li>Return the matching Manager object (or null if empty)</li>
+</ul>
+
+<p><strong>Method 2:</strong> <code>findManagersByDepartment</code></p>
+<ul>
+  <li>Input: Manager[] and department (String)</li>
+  <li>Find all managers whose department matches (ignore case)</li>
+  <li>Sort matching managers by id in ascending order</li>
+  <li>Return the sorted array / list (or null if none)</li>
+</ul>
+
+<p><strong>Input Notes:</strong></p>
+<ul>
+  <li>First line: integer <code>n</code> (number of objects)</li>
+  <li>Next lines: <code>id</code>, <code>name</code>, <code>salary</code>, <code>bonus</code>, and <code>department</code> for each manager</li>
+  <li>Last line: <code>department</code> for search</li>
+</ul>
+<div class="sample-label">Sample Input</div>
+<div class="sample-block">4
+101
+Alice
+50000
+60000
+IT
+102
+Bob
+60000
+80000
+HR
+103
+Charlie
+45000
+50000
+IT
+104
+Diana
+55000
+70000
+IT
+IT</div>
+<div class="sample-label">Sample Output</div>
+<div class="sample-block">Manager with highest annual salary: 102 Bob 800000.0
+Managers in IT sorted by id asc:
+101 Alice
+103 Charlie
+104 Diana</div>`,
+    code: "",
+    stdin: `4
+101
+Alice
+50000
+60000
+IT
+102
+Bob
+60000
+80000
+HR
+103
+Charlie
+45000
+50000
+IT
+104
+Diana
+55000
+70000
+IT
+IT`,
+    expectedOutput: `Manager with highest annual salary: 102 Bob 800000.0
+Managers in IT sorted by id asc:
+101 Alice
+103 Charlie
+104 Diana`,
+    testCases: [
+      {
+        id: 1,
+        name: "Case 1",
+        isPrivate: false,
+        stdin: `4
+101
+Alice
+50000
+60000
+IT
+102
+Bob
+60000
+80000
+HR
+103
+Charlie
+45000
+50000
+IT
+104
+Diana
+55000
+70000
+IT
+IT`,
+        expectedOutput: `Manager with highest annual salary: 102 Bob 800000.0
+Managers in IT sorted by id asc:
+101 Alice
+103 Charlie
+104 Diana`
+      },
+      {
+        id: 2,
+        name: "Case 2",
+        isPrivate: true,
+        stdin: `4
+1
+Rajesh
+70000
+120000
+Finance
+2
+Sneha
+80000
+90000
+Marketing
+3
+Vikram
+65000
+85000
+Finance
+4
+Amit
+72000
+95000
+Finance
+Finance`,
+        expectedOutput: `Manager with highest annual salary: 2 Sneha 1050000.0
+Managers in Finance sorted by id asc:
+1 Rajesh
+3 Vikram
+4 Amit`
+      },
+      {
+        id: 3,
+        name: "Case 3",
+        isPrivate: true,
+        stdin: `3
+201
+Karan
+40000
+30000
+Sales
+202
+Meera
+90000
+150000
+R&D
+203
+Rahul
+52000
+60000
+Sales
+sales`,
+        expectedOutput: `Manager with highest annual salary: 202 Meera 1230000.0
+Managers in sales sorted by id asc:
+201 Karan
+203 Rahul`
+      },
+      {
+        id: 4,
+        name: "Case 4",
+        isPrivate: true,
+        stdin: `3
+11
+Pooja
+62000
+50000
+Operations
+12
+Rohan
+75000
+110000
+Operations
+13
+Ananya
+58000
+40000
+Legal
+Legal`,
+        expectedOutput: `Manager with highest annual salary: 12 Rohan 1010000.0
+Managers in Legal sorted by id asc:
+13 Ananya`
+      }
+    ]
+  },
+  {
+    id: 8,
     name: "Custom / Blank",
     description: "", // Dynamically updated per language
     code: "",
@@ -1499,7 +1717,7 @@ function setFontSize(newSize) {
 
 // ---- Dynamic Question Description Generator ----
 function getQuestionDescription(q) {
-  if (q.id === 7) {
+  if (q.name === "Custom / Blank" || q.id === 8) {
     if (currentLanguage === "python") {
       return `<h3>Custom Python OOP Program</h3>
 <p>Write your own Python Object-Oriented Program from scratch!</p>
@@ -1824,10 +2042,10 @@ function setLanguage(lang) {
     updateSaveStatus("saved");
   }
 
-  // Update Question 7 description if selected
-  if (currentQuestionId === 7) {
-    const q7 = QUESTIONS.find(q => q.id === 7);
-    if (q7) questionDisplayEl.innerHTML = getQuestionDescription(q7);
+  // Update Custom question description if selected
+  const customQ = QUESTIONS.find(q => q.name === "Custom / Blank");
+  if (customQ && currentQuestionId === customQ.id) {
+    questionDisplayEl.innerHTML = getQuestionDescription(customQ);
   }
 }
 
