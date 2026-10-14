@@ -504,7 +504,7 @@ Free
 05
 Free</div>
 <div class="sample-label">Sample Output</div>
-<div class="sample-block">Total rooms booked in month 05 = 5
+<div class="sample-block">Total rooms booked in month 5 = 5
 Second hotel with WiFi option Free by bill amount descending:
 101 Royal Stay</div>`,
     code: "",
@@ -535,7 +535,7 @@ Free
 3600
 05
 Free`,
-    expectedOutput: `Total rooms booked in month 05 = 5
+    expectedOutput: `Total rooms booked in month 5 = 5
 Second hotel with WiFi option Free by bill amount descending:
 101 Royal Stay`,
     testCases: [
@@ -570,7 +570,7 @@ Free
 3600
 05
 Free`,
-        expectedOutput: `Total rooms booked in month 05 = 5
+        expectedOutput: `Total rooms booked in month 5 = 5
 Second hotel with WiFi option Free by bill amount descending:
 101 Royal Stay`
       },
@@ -640,7 +640,7 @@ Paid
 9500
 03
 Paid`,
-        expectedOutput: `Total rooms booked in month 03 = 19
+        expectedOutput: `Total rooms booked in month 3 = 19
 Second hotel with WiFi option Paid by bill amount descending:
 14 River Side`
       },
@@ -675,7 +675,7 @@ Paid
 8000
 07
 free`,
-        expectedOutput: `Total rooms booked in month 07 = 6
+        expectedOutput: `Total rooms booked in month 7 = 6
 Second hotel with WiFi option free by bill amount descending:
 3 Hotel Gamma`
       }
@@ -1348,7 +1348,7 @@ function pingCloudServerOnce() {
 
   fetch('https://oops-compiler.onrender.com/health', { method: 'GET', mode: 'no-cors' })
     .catch(() => {
-      fetch('https://oops-compiler.onrender.com/', { method: 'GET', mode: 'no-cors' }).catch(() => {});
+      fetch('https://oops-compiler.onrender.com/', { method: 'GET', mode: 'no-cors' }).catch(() => { });
     });
 }
 pingCloudServerOnce();
@@ -1369,7 +1369,7 @@ try {
   if (QUESTIONS.some(q => q.id === savedQ)) {
     currentQuestionId = savedQ;
   }
-} catch (e) {}
+} catch (e) { }
 
 let currentFontSize = 15;
 try {
@@ -1377,7 +1377,7 @@ try {
   if (storedSize >= 10 && storedSize <= 36) {
     currentFontSize = storedSize;
   }
-} catch (e) {}
+} catch (e) { }
 
 // Editor instance & timers
 let monacoEditor = null;
@@ -1491,7 +1491,7 @@ function setFontSize(newSize) {
   currentFontSize = Math.min(36, Math.max(10, newSize));
   try {
     localStorage.setItem(`${STORAGE_PREFIX}font_size`, currentFontSize);
-  } catch (e) {}
+  } catch (e) { }
 
   if (monacoEditor) monacoEditor.updateOptions({ fontSize: currentFontSize });
   if (fontSizeDisplay) fontSizeDisplay.textContent = `${currentFontSize}px`;
@@ -1745,7 +1745,7 @@ function loadQuestion(id) {
   currentQuestionId = id;
   try {
     localStorage.setItem(`${STORAGE_PREFIX}last_question_id`, id);
-  } catch (e) {}
+  } catch (e) { }
 
   // Update sidebar
   questionDisplayEl.innerHTML = getQuestionDescription(q);
@@ -1789,7 +1789,7 @@ function setLanguage(lang) {
   currentLanguage = lang;
   try {
     localStorage.setItem(`${STORAGE_PREFIX}last_language`, lang);
-  } catch (e) {}
+  } catch (e) { }
 
   // Update Language toggle buttons
   btnLangJava.classList.toggle("active", lang === "java");
