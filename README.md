@@ -1,6 +1,6 @@
 # 🚀 Specialized OOP Compiler (Java & Python)
 
-> **Completely Coded by GPT — Made for practicing specific Object-Oriented Programming questions.**
+# Completely Coded by GPT — Made for practicing specific Object-Oriented Programming questions.
 
 An interactive web-based code editor and compiler built for practicing core OOP patterns in **Java 17** and **Python 3**, featuring automated evaluation, public & private test cases, and instantaneous local backend execution.
 
