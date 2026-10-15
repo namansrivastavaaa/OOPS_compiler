@@ -226,6 +226,36 @@ Players in ODI sorted by id desc:
 3 Zaheer
 2 Yuvraj
 1 Dhoni`
+      },
+      {
+        id: 5,
+        name: "Case 5",
+        isPrivate: true,
+        stdin: `4
+1
+Virat
+12000
+Batsman
+ODI
+2
+Rohit
+9500
+Batsman
+T20
+3
+Bumrah
+200
+Bowler
+ODI
+4
+Jadeja
+2500
+Batsman
+ODI
+Batsman
+Test`,
+        expectedOutput: `Lowest runs by Batsman = 2500
+null`
       }
     ]
   },
@@ -441,6 +471,36 @@ WINDOWS`,
 Laptops with OS WINDOWS sorted by id desc:
 7 MSI
 5 hp`
+      },
+      {
+        id: 5,
+        name: "Case 5",
+        isPrivate: true,
+        stdin: `4
+1
+Dell
+Windows
+55000
+4
+2
+HP
+Windows
+48000
+3
+3
+Apple
+MacOS
+120000
+5
+4
+Dell
+Linux
+62000
+5
+Dell
+Ubuntu`,
+        expectedOutput: `Count of Dell laptops with rating > 3 = 2
+null`
       }
     ]
   },
@@ -678,6 +738,40 @@ free`,
         expectedOutput: `Total rooms booked in month 7 = 6
 Second hotel with WiFi option free by bill amount descending:
 3 Hotel Gamma`
+      },
+      {
+        id: 5,
+        name: "Case 5",
+        isPrivate: true,
+        stdin: `4
+101
+Royal Stay
+12-05-2024
+3
+Free
+2500
+102
+Green Park
+16-08-2024
+5
+Paid
+4200
+103
+City Inn
+05-05-2024
+2
+Free
+1800
+104
+Sunset Hotel
+18-09-2024
+4
+Free
+3600
+05
+Complementary`,
+        expectedOutput: `Total rooms booked in month 5 = 5
+null`
       }
     ]
   },
@@ -894,6 +988,36 @@ Movies in hindi sorted by rating desc:
 101 Hera Pheri 8.2
 103 Golmaal 7.5
 102 Dhamaal 7.4`
+      },
+      {
+        id: 5,
+        name: "Case 5",
+        isPrivate: true,
+        stdin: `4
+1
+Inception
+Sci-Fi
+8.8
+English
+2
+Interstellar
+Sci-Fi
+8.6
+English
+3
+Dangal
+Drama
+8.4
+Hindi
+4
+3Idiots
+Drama
+8.1
+Hindi
+Sci-Fi
+Spanish`,
+        expectedOutput: `Highest rated Sci-Fi movie: 1 Inception 8.8
+null`
       }
     ]
   },
@@ -1113,6 +1237,36 @@ Policies with tenure >= 5 sorted by premium asc:
 101 Peter 9500.0
 103 Steve 11500.0
 102 Tony 50000.0`
+      },
+      {
+        id: 5,
+        name: "Case 5",
+        isPrivate: true,
+        stdin: `4
+1
+Alice
+Gold
+15000
+5
+2
+Bob
+Silver
+8000
+3
+3
+Charlie
+Gold
+12000
+4
+4
+Diana
+Platinum
+25000
+10
+Gold
+25`,
+        expectedOutput: `Total premium for Gold = 27000.0
+null`
       }
     ]
   },
@@ -1311,6 +1465,34 @@ No Coffee Found`
         isPrivate: true,
         stdin: `0`,
         expectedOutput: `No Coffee Found`
+      },
+      {
+        id: 5,
+        name: "Case 5",
+        isPrivate: true,
+        stdin: `3
+1
+Davidoff
+instant
+1015.0
+2
+Barral-aged Coffee
+ground
+1000.0
+3
+Bru
+instant
+100.0
+decaf`,
+        expectedOutput: `1
+Davidoff
+instant
+1015.0
+2
+Barral-aged Coffee
+ground
+1000.0
+null`
       }
     ]
   },
@@ -1529,6 +1711,35 @@ Legal`,
         expectedOutput: `Manager with highest annual salary: 12 Rohan 1010000.0
 Managers in Legal sorted by id asc:
 13 Ananya`
+      },
+      {
+        id: 5,
+        name: "Case 5",
+        isPrivate: true,
+        stdin: `4
+101
+Alice
+50000
+60000
+IT
+102
+Bob
+60000
+80000
+HR
+103
+Charlie
+45000
+50000
+IT
+104
+Diana
+55000
+70000
+IT
+Marketing`,
+        expectedOutput: `Manager with highest annual salary: 102 Bob 800000.0
+null`
       }
     ]
   },
@@ -1784,7 +1995,7 @@ function renderSidebarHiddenCases(q) {
     <div class="private-testcases-box">
       <div class="private-testcases-header">
         <div class="private-title">
-          <span class="private-badge">🔒 3 Private Test Cases</span>
+          <span class="private-badge">🔒 ${privateCases.length} Private Test Cases</span>
           <span class="private-sub">Hidden verification cases</span>
         </div>
         <button class="btn btn-small btn-toggle-hidden ${showHiddenTestCases ? 'active' : ''}" id="btn-toggle-hidden-side" title="Show or hide private test cases">

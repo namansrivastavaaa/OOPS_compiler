@@ -46,7 +46,7 @@ If you don't want to run the server locally:
 ## 🌟 Key Features
 
 - **☕ Dual Language Support**: Practice in either **Java 17** or **Python 3** with a single click (`Alt + J` / `Alt + P`).
-- **🔒 Hidden / Private Test Cases**: Every problem has **4 test cases** (1 public sample + 3 private test cases). Test cases can be toggled using the **`👁️ Show Hidden Test Cases`** button.
+- **🔒 Hidden / Private Test Cases**: Every problem has **5 test cases** (1 public sample + 4 private test cases, including null / no-match edge case verification). Test cases can be toggled using the **`👁️ Show Hidden Test Cases`** button.
 - **⚡ Monaco Editor**: Integrated VS Code editor experience with bracket colorization, auto-formatting, and keyboard shortcuts.
 - **💾 Auto-Save**: Your code is saved locally per question and per language as you type.
 
