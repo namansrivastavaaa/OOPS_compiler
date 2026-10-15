@@ -1745,6 +1745,217 @@ null`
   },
   {
     id: 8,
+    name: "Product Management",
+    description: `<h3>Question 8: Product Management System</h3>
+<p>Design a system that manages a company's products. The system must store products, record customer ratings, and identify the best-rated product in a category.</p>
+
+<p><strong>1. Create the <code>Product</code> class</strong></p>
+<p>Attributes:</p>
+<ul>
+  <li><code>id</code> (int) — Unique product ID</li>
+  <li><code>name</code> (String) — Product name</li>
+  <li><code>category</code> (String) — Product category</li>
+  <li><code>price</code> (double) — Product price</li>
+  <li><code>ratings</code> (List&lt;Double&gt;) — Ratings received, empty when created</li>
+</ul>
+<p>Requirements: Provide a parameterized constructor, getters, and setters. Override <code>toString()</code>:</p>
+<div class="sample-block">Product [ID: 101, Name: Keyboard, Category: Accessories, Price: 50.0]</div>
+
+<p><strong>2. Create the <code>ProductService</code> class</strong></p>
+<p>Store all products in a List and implement the following non-static methods.</p>
+<p><strong>A. Add</strong></p>
+<ul>
+  <li>Add a new product with an empty ratings list.</li>
+  <li>If duplicate ID exists, print <code>Product Already Exists</code>.</li>
+  <li>On success, print <code>Product Added Successfully</code>.</li>
+</ul>
+<p><strong>B. Update (Add Rating)</strong></p>
+<ul>
+  <li>Add the given rating to the product's ratings list by ID.</li>
+  <li>On success, print <code>Product updated successfully</code>.</li>
+  <li>If ID not found, print <code>Id not found for the product</code>.</li>
+</ul>
+<p><strong>C. Get</strong></p>
+<ul>
+  <li>Print details (via <code>toString()</code>) of every product whose name matches (case-insensitive).</li>
+  <li>If no match, print <code>No Product Found</code>.</li>
+  <li>Preserve insertion order; do not sort.</li>
+</ul>
+<p><strong>D. Average</strong></p>
+<ul>
+  <li>Calculate the average of ALL ratings across ALL products.</li>
+  <li>If no products or no ratings, print <code>No Product Found</code>.</li>
+  <li>Print the average as a double.</li>
+</ul>
+<p><strong>E. WeightedAverage</strong></p>
+<p>Input: a category name and a minimum number of reviews <em>m</em>.</p>
+<ul>
+  <li>Consider only products in the specified category with at least <em>m</em> ratings.</li>
+  <li>Weighted Rating formula: <code>WR = (v*R + m*C) / (v + m)</code>, where R = product's average, v = review count, C = global average, m = minimum reviews.</li>
+  <li>Print the name of the product with the highest WR.</li>
+  <li>If no product qualifies, print <code>No Product Found</code>.</li>
+  <li>Tie-break: choose the product with the lower ID.</li>
+  <li>String comparisons are case-insensitive.</li>
+</ul>
+
+<p><strong>3. Input format</strong></p>
+<ul>
+  <li>First line: integer N (number of operations).</li>
+  <li>If N = 0, print <code>No Operation Performed</code> and exit.</li>
+</ul>
+<p>Supported operation formats:</p>
+<div class="sample-block">Add: id,name,category,price
+Update: id,rating
+Get: name
+Average
+WeightedAverage: category,m</div>
+
+<div class="sample-label">Sample Input</div>
+<div class="sample-block">11
+Add: 101,Keyboard,Accessories,50.0
+Add: 102,Mouse,Accessories,30.0
+Add: 103,Keyboard,Accessories,70.0
+Add: 101,Keypad,Accessories,15.0
+Update: 101,4.0
+Update: 101,5.0
+Update: 103,3.0
+Update: 999,5.0
+Get: keyboard
+Average
+WeightedAverage: Accessories,1</div>
+<div class="sample-label">Sample Output</div>
+<div class="sample-block">Product Added Successfully
+Product Added Successfully
+Product Added Successfully
+Product Already Exists
+Product updated successfully
+Product updated successfully
+Product updated successfully
+Id not found for the product
+Product [ID: 101, Name: Keyboard, Category: Accessories, Price: 50.0]
+Product [ID: 103, Name: Keyboard, Category: Accessories, Price: 70.0]
+4.0
+Keyboard</div>`,
+    code: "",
+    stdin: `11
+Add: 101,Keyboard,Accessories,50.0
+Add: 102,Mouse,Accessories,30.0
+Add: 103,Keyboard,Accessories,70.0
+Add: 101,Keypad,Accessories,15.0
+Update: 101,4.0
+Update: 101,5.0
+Update: 103,3.0
+Update: 999,5.0
+Get: keyboard
+Average
+WeightedAverage: Accessories,1`,
+    expectedOutput: `Product Added Successfully
+Product Added Successfully
+Product Added Successfully
+Product Already Exists
+Product updated successfully
+Product updated successfully
+Product updated successfully
+Id not found for the product
+Product [ID: 101, Name: Keyboard, Category: Accessories, Price: 50.0]
+Product [ID: 103, Name: Keyboard, Category: Accessories, Price: 70.0]
+4.0
+Keyboard`,
+    testCases: [
+      {
+        id: 1,
+        name: "Case 1",
+        isPrivate: false,
+        stdin: `11
+Add: 101,Keyboard,Accessories,50.0
+Add: 102,Mouse,Accessories,30.0
+Add: 103,Keyboard,Accessories,70.0
+Add: 101,Keypad,Accessories,15.0
+Update: 101,4.0
+Update: 101,5.0
+Update: 103,3.0
+Update: 999,5.0
+Get: keyboard
+Average
+WeightedAverage: Accessories,1`,
+        expectedOutput: `Product Added Successfully
+Product Added Successfully
+Product Added Successfully
+Product Already Exists
+Product updated successfully
+Product updated successfully
+Product updated successfully
+Id not found for the product
+Product [ID: 101, Name: Keyboard, Category: Accessories, Price: 50.0]
+Product [ID: 103, Name: Keyboard, Category: Accessories, Price: 70.0]
+4.0
+Keyboard`
+      },
+      {
+        id: 2,
+        name: "Case 2",
+        isPrivate: true,
+        stdin: `7
+Add: 201,Headphones,Electronics,1500.0
+Add: 202,Speaker,Electronics,2000.0
+Add: 203,Earbuds,Electronics,800.0
+Update: 201,4.5
+Update: 201,3.5
+Update: 202,5.0
+WeightedAverage: Electronics,1`,
+        expectedOutput: `Product Added Successfully
+Product Added Successfully
+Product Added Successfully
+Product updated successfully
+Product updated successfully
+Product updated successfully
+Speaker`
+      },
+      {
+        id: 3,
+        name: "Case 3",
+        isPrivate: true,
+        stdin: `5
+Add: 301,Shirt,Clothing,500.0
+Add: 302,Pants,Clothing,800.0
+Update: 301,3.0
+Update: 301,4.0
+Average`,
+        expectedOutput: `Product Added Successfully
+Product Added Successfully
+Product updated successfully
+Product updated successfully
+3.5`
+      },
+      {
+        id: 4,
+        name: "Case 4",
+        isPrivate: true,
+        stdin: `6
+Add: 401,Laptop,Computers,50000.0
+Add: 401,Desktop,Computers,30000.0
+Get: laptop
+Update: 999,4.0
+Average
+WeightedAverage: Computers,2`,
+        expectedOutput: `Product Added Successfully
+Product Already Exists
+Product [ID: 401, Name: Laptop, Category: Computers, Price: 50000.0]
+Id not found for the product
+No Product Found
+No Product Found`
+      },
+      {
+        id: 5,
+        name: "Case 5",
+        isPrivate: true,
+        stdin: `0`,
+        expectedOutput: `No Operation Performed`
+      }
+    ]
+  },
+  {
+    id: 9,
     name: "Custom / Blank",
     description: "", // Dynamically updated per language
     code: "",
@@ -1928,7 +2139,7 @@ function setFontSize(newSize) {
 
 // ---- Dynamic Question Description Generator ----
 function getQuestionDescription(q) {
-  if (q.name === "Custom / Blank" || q.id === 8) {
+  if (q.name === "Custom / Blank" || q.id === 9) {
     if (currentLanguage === "python") {
       return `<h3>Custom Python OOP Program</h3>
 <p>Write your own Python Object-Oriented Program from scratch!</p>
