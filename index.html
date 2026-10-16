@@ -11,6 +11,7 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="quiz.css" />
 </head>
 
 <body>
@@ -27,6 +28,20 @@
         </div>
         <h2>Specialized OOP Compiler</h2>
       </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="main-nav-tabs" id="main-nav-tabs" role="tablist" aria-label="Main Application Views">
+        <button class="main-nav-btn active" id="tab-nav-compiler" data-tab="compiler" role="tab" aria-selected="true" title="Switch to OOP Compiler">
+          <span>💻</span>
+          <span>OOP Compiler</span>
+        </button>
+        <button class="main-nav-btn" id="tab-nav-quiz" data-tab="quiz" role="tab" aria-selected="false" title="Switch to AI/ML Technical Placement Quiz">
+          <span>🧠</span>
+          <span>AI/ML Technical Quiz</span>
+          <span class="nav-tab-badge">40 MCQs</span>
+        </button>
+      </nav>
+
       <button id="btn-run-locally-help" class="btn"
         style="font-size: 0.8rem; background: linear-gradient(135deg, #ff7e5f, #feb47b); color: #fff; border: none; font-weight: 600; padding: 5px 12px; border-radius: 6px; box-shadow: 0 2px 10px rgba(255, 126, 95, 0.35); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;"
         onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 14px rgba(255, 126, 95, 0.5)';"
@@ -171,6 +186,113 @@
     </div>
   </main>
 
+  <!-- AI/ML Placement Quiz Main Layout -->
+  <main id="aiml-quiz-main">
+
+    <!-- Left Sidebar: Topics, Progress & Question Matrix -->
+    <aside class="quiz-sidebar">
+      <div class="quiz-sidebar-header">
+        <h3><span>🧠</span> Assessment Control</h3>
+        <select id="quiz-mode-select" style="background: rgba(255,255,255,0.06); color: #fff; border: 1px solid var(--border-color, #272a38); border-radius: 6px; padding: 4px 8px; font-size: 12px; font-weight: 500; cursor: pointer;">
+          <option value="interactive">Interactive Mode</option>
+          <option value="exam">Timed Exam Mode</option>
+        </select>
+      </div>
+
+      <div class="sidebar-scroll-content">
+        <!-- Topic Selection -->
+        <div>
+          <div class="sidebar-section-title">
+            <span>Assessment Topics</span>
+            <span style="font-size: 10.5px; color: var(--text-muted, #64748b);">8 Topics</span>
+          </div>
+          <div class="topic-pills-list" id="quiz-topic-pills"></div>
+        </div>
+
+        <!-- Question Palette / Matrix -->
+        <div>
+          <div class="sidebar-section-title">
+            <span>Question Matrix (40)</span>
+            <span id="quiz-quick-score" style="font-size: 11px; color: #38bdf8; text-transform: none; font-weight: 600;">Answered: 0/40</span>
+          </div>
+          <div class="palette-grid" id="quiz-question-palette"></div>
+          <div class="palette-legend">
+            <div class="legend-item"><span class="legend-color" style="background: rgba(255,255,255,0.06); border: 1px solid #272a38;"></span> Unattempted</div>
+            <div class="legend-item"><span class="legend-color" style="background: rgba(56,189,248,0.3); border: 1px solid #38bdf8;"></span> Answered</div>
+            <div class="legend-item"><span class="legend-color" style="background: rgba(245,158,11,0.3); border: 1px solid #f59e0b;"></span> Flagged</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-sidebar-footer">
+        <button id="quiz-btn-submit" class="btn" style="flex: 1; background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; font-weight: 700; padding: 8px 14px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;">
+          <span>✓</span>
+          <span>Submit Test</span>
+        </button>
+        <button id="quiz-btn-reset" class="btn btn-icon" title="Reset Assessment" style="padding: 8px 12px; font-size: 12px;">
+          ↺ Reset
+        </button>
+      </div>
+    </aside>
+
+    <!-- Right Main Area: Question & Answer Workspace -->
+    <section class="quiz-content-area">
+      <!-- Top Status Bar -->
+      <div class="quiz-top-bar">
+        <div class="quiz-top-left">
+          <span class="badge-topic" id="quiz-q-topic">Topic Name</span>
+          <span class="badge-difficulty badge-easy" id="quiz-q-difficulty">EASY</span>
+          <span class="badge-type" id="quiz-q-type">Conceptual</span>
+        </div>
+        <div class="quiz-top-right">
+          <span class="quiz-timer-pill" id="quiz-timer-display">⏱️ 40:00</span>
+          <button id="quiz-btn-flag" class="btn btn-icon btn-small" style="font-size: 12px; padding: 5px 10px;">🏳️ Flag for Review</button>
+        </div>
+      </div>
+
+      <!-- Question Body Container -->
+      <div class="quiz-body-container">
+        <div class="question-meta-row">
+          <span id="quiz-q-number" style="font-weight: 600; color: #cbd5e1;">Question 1 of 40</span>
+          <span style="font-size: 12px; color: #10b981; font-weight: 600;">+1 Mark • Single Correct Choice</span>
+        </div>
+
+        <h3 class="question-text-heading" id="quiz-question-text">Loading question text...</h3>
+
+        <div class="quiz-schema-box" id="quiz-schema-block" style="display: none;"></div>
+
+        <div class="quiz-code-box" id="quiz-code-wrapper" style="display: none;">
+          <pre><code id="quiz-code-block"></code></pre>
+        </div>
+
+        <div class="options-grid" id="quiz-options-container"></div>
+
+        <!-- Feedback & Explanation Card (Auto-revealed in interactive mode or on submit) -->
+        <div class="quiz-feedback-card" id="quiz-feedback-card"></div>
+      </div>
+
+      <!-- Bottom Action Bar -->
+      <div class="quiz-action-bar">
+        <div class="quiz-action-left">
+          <button id="quiz-btn-prev" class="btn btn-icon" style="padding: 8px 16px; font-weight: 600;">
+            ← Previous
+          </button>
+          <button id="quiz-btn-next" class="btn" style="background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; border: none; padding: 8px 18px; font-weight: 600; border-radius: 6px;">
+            Next →
+          </button>
+        </div>
+        <div class="quiz-action-right">
+          <button id="quiz-btn-clear" class="btn btn-icon btn-small" style="color: #94a3b8; font-size: 12px;">
+            Clear Selection
+          </button>
+          <button id="quiz-btn-check" class="btn" style="background: rgba(99,102,241,0.2); border: 1px solid #6366f1; color: #a5b4fc; font-weight: 600; padding: 6px 14px; border-radius: 6px; display: none;">
+            Check Answer
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
   <!-- Footer -->
   <footer id="app-footer">
     <div class="footer-left">
@@ -221,6 +343,41 @@ node Backend/server.js</pre>
     </div>
   </dialog>
 
+  <!-- Quiz Scorecard Dialog -->
+  <dialog id="quiz-scorecard-dialog">
+    <div class="scorecard-header">
+      <h3 style="margin: 0; font-size: 19px; color: #fff; display: flex; align-items: center; gap: 8px;">
+        <span>📊</span> Placement Assessment Scorecard
+      </h3>
+      <button id="quiz-scorecard-close" class="btn btn-icon" style="font-size: 14px; padding: 4px 8px;">✕</button>
+    </div>
+
+    <div class="scorecard-banner">
+      <div class="scorecard-circle">
+        <div class="scorecard-total-marks" id="scorecard-total-marks">0 / 40</div>
+        <div class="scorecard-pct" id="scorecard-percentage">0% Score</div>
+      </div>
+      <div class="scorecard-details">
+        <div class="scorecard-badge badge-warning" id="scorecard-status-badge">Analyzing Performance...</div>
+        <p style="margin: 0; font-size: 13px; color: #94a3b8; line-height: 1.5;">
+          Placement Readiness Evaluation calculated across all 8 technical focus areas.
+        </p>
+      </div>
+    </div>
+
+    <h4 style="margin: 0 0 10px 0; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8;">
+      Topic-wise Performance Breakdown
+    </h4>
+    <div class="scorecard-topic-bars" id="scorecard-topic-bars"></div>
+
+    <div class="scorecard-weak-section" id="scorecard-weak-topics"></div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+      <button id="quiz-scorecard-retake" class="btn btn-icon" style="padding: 7px 16px;">Retake Test</button>
+      <button id="quiz-scorecard-review" class="btn" style="background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; border: none; padding: 7px 20px; font-weight: 600; border-radius: 6px;">Review Answers</button>
+    </div>
+  </dialog>
+
   <!-- Scripts -->
   <script>
     const runLocallyBtn = document.getElementById('btn-run-locally-help');
@@ -237,6 +394,8 @@ node Backend/server.js</pre>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
   <script src="app.js"></script>
+  <script src="quiz-data.js"></script>
+  <script src="quiz.js"></script>
 </body>
 
 </html>

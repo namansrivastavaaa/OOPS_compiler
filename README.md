@@ -45,6 +45,7 @@ If you don't want to run the server locally:
 
 ## 🌟 Key Features
 
+- **🧠 AI/ML Technical Placement Quiz**: A comprehensive 40-question placement assessment across 8 core topics (SQL, AI Basics, EDA & Viz, Supervised Learning, Unsupervised Learning, Advanced ML, Generative AI & LLMs, Agentic AI & RAG) with Interactive & Timed Exam modes, question matrix, and instant scorecards.
 - **☕ Dual Language Support**: Practice in either **Java 17** or **Python 3** with a single click (`Alt + J` / `Alt + P`).
 - **🔒 Hidden / Private Test Cases**: Every problem has **5 test cases** (1 public sample + 4 private test cases, including null / no-match edge case verification). Test cases can be toggled using the **`👁️ Show Hidden Test Cases`** button.
 - **⚡ Monaco Editor**: Integrated VS Code editor experience with bracket colorization, auto-formatting, and keyboard shortcuts.
@@ -76,6 +77,8 @@ If you don't want to run the server locally:
 | **`Alt + P`** | Switch to Python |
 | **`Ctrl + =` / `Ctrl + -`** | Zoom in / Zoom out editor font |
 | **`Esc`** | Close execution output drawer |
+| **`←` / `→`** | Navigate questions in AI/ML Quiz |
+| **`1` / `2` / `3` / `4`** | Select options A/B/C/D in AI/ML Quiz |
 
 ---
 
@@ -87,7 +90,10 @@ OOPS_compiler/
 │   ├── server.js          # Unified Node.js Java & Python execution engine
 │   └── update.js          # Maintenance & update script
 ├── app.js                 # App state, Monaco init, problem sets & test runner
-├── index.html             # Application UI and layout
+├── quiz-data.js           # 40-question placement question bank (8 topics)
+├── quiz.js                # Quiz controller (Interactive & Exam modes, Scorecard)
+├── quiz.css               # Styling for AI/ML assessment tabs, palette & cards
+├── index.html             # Application UI and dual-tab layout
 ├── index.css              # Custom styling, dark mode theme & animations
 ├── Dockerfile             # Container configuration for cloud deployment
 ├── package.json           # Dependencies and scripts
