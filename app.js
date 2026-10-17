@@ -1746,7 +1746,7 @@ null`
   {
     id: 8,
     name: "Product Management",
-    description: `<h3>Question 8: Product Management System <span style="font-size: 0.72rem; font-weight: 500; color: #a5b4fc; vertical-align: middle;">(Newer Format)</span></h3>
+    description: `<h3>Question 8: Product Management System <span style="font-size: 0.82rem; font-weight: 800; color: #ffb86c; background: rgba(255, 184, 108, 0.18); border: 1px solid rgba(255, 184, 108, 0.45); padding: 3px 10px; border-radius: 6px; vertical-align: middle; margin-left: 8px;">NEWER FORMAT</span></h3>
 <p>Design a system that manages a company's products. The system must store products, record customer ratings, and identify the best-rated product in a category.</p>
 
 <p><strong>1. Create the <code>Product</code> class</strong></p>
@@ -2571,6 +2571,7 @@ function renderTemplateList() {
     item.innerHTML = `
       <span class="template-number">${q.id}.</span>
       <span class="template-name">${q.name}</span>
+      ${q.id === 8 ? '<span style="font-size: 0.65rem; font-weight: 800; color: #ffb86c; background: rgba(255, 184, 108, 0.22); border: 1px solid rgba(255, 184, 108, 0.45); padding: 1px 6px; border-radius: 4px; margin-left: 6px; letter-spacing: 0.03em;">NEW FORMAT</span>' : ''}
     `;
     item.addEventListener("click", () => loadQuestion(q.id));
     templateListEl.appendChild(item);
