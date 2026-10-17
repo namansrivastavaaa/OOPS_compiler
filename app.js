@@ -1746,7 +1746,7 @@ null`
   {
     id: 8,
     name: "Product Management",
-    description: `<h3>Question 8: Product Management System</h3>
+    description: `<h3>Question 8: Product Management System <span style="font-size: 0.72rem; font-weight: 500; color: #a5b4fc; vertical-align: middle;">(Newer Format)</span></h3>
 <p>Design a system that manages a company's products. The system must store products, record customer ratings, and identify the best-rated product in a category.</p>
 
 <p><strong>1. Create the <code>Product</code> class</strong></p>
