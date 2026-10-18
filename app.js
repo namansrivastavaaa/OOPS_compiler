@@ -1746,7 +1746,7 @@ null`
   {
     id: 8,
     name: "Product Management",
-    description: `<h3>Question 8: Product Management System <span style="font-size: 0.82rem; font-weight: 800; color: #ffb86c; background: rgba(255, 184, 108, 0.18); border: 1px solid rgba(255, 184, 108, 0.45); padding: 3px 10px; border-radius: 6px; vertical-align: middle; margin-left: 8px;">NEWER FORMAT</span></h3>
+    description: `<h3>Question 8: Product Management System</h3>
 <p>Design a system that manages a company's products. The system must store products, record customer ratings, and identify the best-rated product in a category.</p>
 
 <p><strong>1. Create the <code>Product</code> class</strong></p>
@@ -1956,6 +1956,434 @@ No Product Found`
   },
   {
     id: 9,
+    name: "Book Management",
+    description: `<h3>Question 9: Book Management System</h3>
+<p>Design a system that manages a library's collection of books. The system must store books, record reader review ratings, and identify the best-rated book in a genre.</p>
+
+<p><strong>1. Create the <code>Book</code> class</strong></p>
+<p>Attributes:</p>
+<ul>
+  <li><code>id</code> (int) — Unique book ID</li>
+  <li><code>title</code> (String) — Book title</li>
+  <li><code>genre</code> (String) — Book genre</li>
+  <li><code>price</code> (double) — Book price</li>
+  <li><code>ratings</code> (List&lt;Double&gt;) — Ratings received, empty when created</li>
+</ul>
+<p>Requirements: Provide a parameterized constructor, getters, and setters. Override <code>toString()</code>:</p>
+<div class="sample-block">Book [ID: 101, Title: Clean Code, Genre: Tech, Price: 45.0]</div>
+
+<p><strong>2. Create the <code>BookService</code> class</strong></p>
+<p>Store all books in a List and implement the following non-static methods.</p>
+<p><strong>A. Add</strong></p>
+<ul>
+  <li>Add a new book with an empty ratings list.</li>
+  <li>If duplicate ID exists, print <code>Book Already Exists</code>.</li>
+  <li>On success, print <code>Book Added Successfully</code>.</li>
+</ul>
+<p><strong>B. Update (Add Rating)</strong></p>
+<ul>
+  <li>Add the given rating to the book's ratings list by ID.</li>
+  <li>On success, print <code>Book updated successfully</code>.</li>
+  <li>If ID not found, print <code>Id not found for the book</code>.</li>
+</ul>
+<p><strong>C. Get</strong></p>
+<ul>
+  <li>Print details (via <code>toString()</code>) of every book whose genre matches (case-insensitive).</li>
+  <li>If no match, print <code>No Book Found</code>.</li>
+  <li>Preserve insertion order; do not sort.</li>
+</ul>
+<p><strong>D. Average</strong></p>
+<ul>
+  <li>Calculate the average of ALL ratings across ALL books.</li>
+  <li>If no books or no ratings, print <code>No Book Found</code>.</li>
+  <li>Print the average as a double.</li>
+</ul>
+<p><strong>E. WeightedAverage</strong></p>
+<p>Input: a genre name and a minimum number of reviews <em>m</em>.</p>
+<ul>
+  <li>Consider only books in the specified genre with at least <em>m</em> ratings.</li>
+  <li>Weighted Rating formula: <code>WR = (v*R + m*C) / (v + m)</code>, where R = book's average, v = review count, C = global average, m = minimum reviews.</li>
+  <li>Print the title of the book with the highest WR.</li>
+  <li>If no book qualifies, print <code>No Book Found</code>.</li>
+  <li>Tie-break: choose the book with the lower ID.</li>
+  <li>String comparisons are case-insensitive.</li>
+</ul>
+
+<p><strong>3. Input format</strong></p>
+<ul>
+  <li>First line: integer N (number of operations).</li>
+  <li>If N = 0, print <code>No Operation Performed</code> and exit.</li>
+</ul>
+<p>Supported operation formats:</p>
+<div class="sample-block">Add: id,title,genre,price
+Update: id,rating
+Get: genre
+Average
+WeightedAverage: genre,m</div>
+
+<div class="sample-label">Sample Input</div>
+<div class="sample-block">11
+Add: 101,Clean Code,Tech,45.0
+Add: 102,Design Patterns,Tech,55.0
+Add: 103,Refactoring,Tech,50.0
+Add: 101,Code Complete,Tech,40.0
+Update: 101,4.0
+Update: 101,5.0
+Update: 103,3.0
+Update: 999,5.0
+Get: tech
+Average
+WeightedAverage: Tech,1</div>
+<div class="sample-label">Sample Output</div>
+<div class="sample-block">Book Added Successfully
+Book Added Successfully
+Book Added Successfully
+Book Already Exists
+Book updated successfully
+Book updated successfully
+Book updated successfully
+Id not found for the book
+Book [ID: 101, Title: Clean Code, Genre: Tech, Price: 45.0]
+Book [ID: 102, Title: Design Patterns, Genre: Tech, Price: 55.0]
+Book [ID: 103, Title: Refactoring, Genre: Tech, Price: 50.0]
+4.0
+Clean Code</div>`,
+    code: "",
+    stdin: `11
+Add: 101,Clean Code,Tech,45.0
+Add: 102,Design Patterns,Tech,55.0
+Add: 103,Refactoring,Tech,50.0
+Add: 101,Code Complete,Tech,40.0
+Update: 101,4.0
+Update: 101,5.0
+Update: 103,3.0
+Update: 999,5.0
+Get: tech
+Average
+WeightedAverage: Tech,1`,
+    expectedOutput: `Book Added Successfully
+Book Added Successfully
+Book Added Successfully
+Book Already Exists
+Book updated successfully
+Book updated successfully
+Book updated successfully
+Id not found for the book
+Book [ID: 101, Title: Clean Code, Genre: Tech, Price: 45.0]
+Book [ID: 102, Title: Design Patterns, Genre: Tech, Price: 55.0]
+Book [ID: 103, Title: Refactoring, Genre: Tech, Price: 50.0]
+4.0
+Clean Code`,
+    testCases: [
+      {
+        id: 1,
+        name: "Case 1",
+        isPrivate: false,
+        stdin: `11
+Add: 101,Clean Code,Tech,45.0
+Add: 102,Design Patterns,Tech,55.0
+Add: 103,Refactoring,Tech,50.0
+Add: 101,Code Complete,Tech,40.0
+Update: 101,4.0
+Update: 101,5.0
+Update: 103,3.0
+Update: 999,5.0
+Get: tech
+Average
+WeightedAverage: Tech,1`,
+        expectedOutput: `Book Added Successfully
+Book Added Successfully
+Book Added Successfully
+Book Already Exists
+Book updated successfully
+Book updated successfully
+Book updated successfully
+Id not found for the book
+Book [ID: 101, Title: Clean Code, Genre: Tech, Price: 45.0]
+Book [ID: 102, Title: Design Patterns, Genre: Tech, Price: 55.0]
+Book [ID: 103, Title: Refactoring, Genre: Tech, Price: 50.0]
+4.0
+Clean Code`
+      },
+      {
+        id: 2,
+        name: "Case 2",
+        isPrivate: true,
+        stdin: `7
+Add: 201,Dune,SciFi,25.0
+Add: 202,Foundation,SciFi,30.0
+Add: 203,Neuromancer,SciFi,20.0
+Update: 201,4.5
+Update: 201,3.5
+Update: 202,5.0
+WeightedAverage: SciFi,1`,
+        expectedOutput: `Book Added Successfully
+Book Added Successfully
+Book Added Successfully
+Book updated successfully
+Book updated successfully
+Book updated successfully
+Foundation`
+      },
+      {
+        id: 3,
+        name: "Case 3",
+        isPrivate: true,
+        stdin: `5
+Add: 301,Hamlet,Drama,15.0
+Add: 302,Macbeth,Drama,18.0
+Update: 301,3.0
+Update: 301,4.0
+Average`,
+        expectedOutput: `Book Added Successfully
+Book Added Successfully
+Book updated successfully
+Book updated successfully
+3.5`
+      },
+      {
+        id: 4,
+        name: "Case 4",
+        isPrivate: true,
+        stdin: `6
+Add: 401,The Hobbit,Fantasy,20.0
+Add: 401,Duplicate Hobbit,Fantasy,22.0
+Get: history
+Update: 999,4.0
+Average
+WeightedAverage: Fantasy,2`,
+        expectedOutput: `Book Added Successfully
+Book Already Exists
+No Book Found
+Id not found for the book
+No Book Found
+No Book Found`
+      },
+      {
+        id: 5,
+        name: "Case 5",
+        isPrivate: true,
+        stdin: `0`,
+        expectedOutput: `No Operation Performed`
+      }
+    ]
+  },
+  {
+    id: 10,
+    name: "Course Management",
+    description: `<h3>Question 10: Course Management System</h3>
+<p>Design a system that manages an academy's educational courses. The system must store courses, record student ratings, and identify the top-rated course in a department.</p>
+
+<p><strong>1. Create the <code>Course</code> class</strong></p>
+<p>Attributes:</p>
+<ul>
+  <li><code>id</code> (int) — Unique course ID</li>
+  <li><code>title</code> (String) — Course title</li>
+  <li><code>department</code> (String) — Department (e.g. CS, EE, Math)</li>
+  <li><code>fee</code> (double) — Course fee</li>
+  <li><code>ratings</code> (List&lt;Double&gt;) — Ratings received, empty when created</li>
+</ul>
+<p>Requirements: Provide a parameterized constructor, getters, and setters. Override <code>toString()</code>:</p>
+<div class="sample-block">Course [ID: 101, Title: Data Structures, Department: CS, Fee: 350.0]</div>
+
+<p><strong>2. Create the <code>CourseService</code> class</strong></p>
+<p>Store all courses in a List and implement the following non-static methods.</p>
+<p><strong>A. Add</strong></p>
+<ul>
+  <li>Add a new course with an empty ratings list.</li>
+  <li>If duplicate ID exists, print <code>Course Already Exists</code>.</li>
+  <li>On success, print <code>Course Added Successfully</code>.</li>
+</ul>
+<p><strong>B. Update (Add Rating)</strong></p>
+<ul>
+  <li>Add the given rating to the course's ratings list by ID.</li>
+  <li>On success, print <code>Course updated successfully</code>.</li>
+  <li>If ID not found, print <code>Id not found for the course</code>.</li>
+</ul>
+<p><strong>C. Get</strong></p>
+<ul>
+  <li>Print details (via <code>toString()</code>) of every course whose department matches (case-insensitive).</li>
+  <li>If no match, print <code>No Course Found</code>.</li>
+  <li>Preserve insertion order; do not sort.</li>
+</ul>
+<p><strong>D. Average</strong></p>
+<ul>
+  <li>Calculate the average of ALL ratings across ALL courses.</li>
+  <li>If no courses or no ratings, print <code>No Course Found</code>.</li>
+  <li>Print the average as a double.</li>
+</ul>
+<p><strong>E. WeightedAverage</strong></p>
+<p>Input: a department name and a minimum number of reviews <em>m</em>.</p>
+<ul>
+  <li>Consider only courses in the specified department with at least <em>m</em> ratings.</li>
+  <li>Weighted Rating formula: <code>WR = (v*R + m*C) / (v + m)</code>, where R = course's average, v = review count, C = global average, m = minimum reviews.</li>
+  <li>Print the title of the course with the highest WR.</li>
+  <li>If no course qualifies, print <code>No Course Found</code>.</li>
+  <li>Tie-break: choose the course with the lower ID.</li>
+  <li>String comparisons are case-insensitive.</li>
+</ul>
+
+<p><strong>3. Input format</strong></p>
+<ul>
+  <li>First line: integer N (number of operations).</li>
+  <li>If N = 0, print <code>No Operation Performed</code> and exit.</li>
+</ul>
+<p>Supported operation formats:</p>
+<div class="sample-block">Add: id,title,department,fee
+Update: id,rating
+Get: department
+Average
+WeightedAverage: department,m</div>
+
+<div class="sample-label">Sample Input</div>
+<div class="sample-block">11
+Add: 101,Data Structures,CS,350.0
+Add: 102,Algorithms,CS,400.0
+Add: 103,Operating Systems,CS,380.0
+Add: 101,Duplicate DS,CS,200.0
+Update: 101,4.0
+Update: 101,5.0
+Update: 103,3.0
+Update: 999,5.0
+Get: cs
+Average
+WeightedAverage: CS,1</div>
+<div class="sample-label">Sample Output</div>
+<div class="sample-block">Course Added Successfully
+Course Added Successfully
+Course Added Successfully
+Course Already Exists
+Course updated successfully
+Course updated successfully
+Course updated successfully
+Id not found for the course
+Course [ID: 101, Title: Data Structures, Department: CS, Fee: 350.0]
+Course [ID: 102, Title: Algorithms, Department: CS, Fee: 400.0]
+Course [ID: 103, Title: Operating Systems, Department: CS, Fee: 380.0]
+4.0
+Data Structures</div>`,
+    code: "",
+    stdin: `11
+Add: 101,Data Structures,CS,350.0
+Add: 102,Algorithms,CS,400.0
+Add: 103,Operating Systems,CS,380.0
+Add: 101,Duplicate DS,CS,200.0
+Update: 101,4.0
+Update: 101,5.0
+Update: 103,3.0
+Update: 999,5.0
+Get: cs
+Average
+WeightedAverage: CS,1`,
+    expectedOutput: `Course Added Successfully
+Course Added Successfully
+Course Added Successfully
+Course Already Exists
+Course updated successfully
+Course updated successfully
+Course updated successfully
+Id not found for the course
+Course [ID: 101, Title: Data Structures, Department: CS, Fee: 350.0]
+Course [ID: 102, Title: Algorithms, Department: CS, Fee: 400.0]
+Course [ID: 103, Title: Operating Systems, Department: CS, Fee: 380.0]
+4.0
+Data Structures`,
+    testCases: [
+      {
+        id: 1,
+        name: "Case 1",
+        isPrivate: false,
+        stdin: `11
+Add: 101,Data Structures,CS,350.0
+Add: 102,Algorithms,CS,400.0
+Add: 103,Operating Systems,CS,380.0
+Add: 101,Duplicate DS,CS,200.0
+Update: 101,4.0
+Update: 101,5.0
+Update: 103,3.0
+Update: 999,5.0
+Get: cs
+Average
+WeightedAverage: CS,1`,
+        expectedOutput: `Course Added Successfully
+Course Added Successfully
+Course Added Successfully
+Course Already Exists
+Course updated successfully
+Course updated successfully
+Course updated successfully
+Id not found for the course
+Course [ID: 101, Title: Data Structures, Department: CS, Fee: 350.0]
+Course [ID: 102, Title: Algorithms, Department: CS, Fee: 400.0]
+Course [ID: 103, Title: Operating Systems, Department: CS, Fee: 380.0]
+4.0
+Data Structures`
+      },
+      {
+        id: 2,
+        name: "Case 2",
+        isPrivate: true,
+        stdin: `7
+Add: 201,Digital Circuits,EE,300.0
+Add: 202,Power Systems,EE,350.0
+Add: 203,Signals,EE,320.0
+Update: 201,4.5
+Update: 201,3.5
+Update: 202,5.0
+WeightedAverage: EE,1`,
+        expectedOutput: `Course Added Successfully
+Course Added Successfully
+Course Added Successfully
+Course updated successfully
+Course updated successfully
+Course updated successfully
+Power Systems`
+      },
+      {
+        id: 3,
+        name: "Case 3",
+        isPrivate: true,
+        stdin: `5
+Add: 301,Linear Algebra,Math,250.0
+Add: 302,Calculus,Math,280.0
+Update: 301,3.0
+Update: 301,4.0
+Average`,
+        expectedOutput: `Course Added Successfully
+Course Added Successfully
+Course updated successfully
+Course updated successfully
+3.5`
+      },
+      {
+        id: 4,
+        name: "Case 4",
+        isPrivate: true,
+        stdin: `6
+Add: 401,Machine Learning,AI,500.0
+Add: 401,Deep Learning,AI,600.0
+Get: physics
+Update: 999,4.0
+Average
+WeightedAverage: AI,2`,
+        expectedOutput: `Course Added Successfully
+Course Already Exists
+No Course Found
+Id not found for the course
+No Course Found
+No Course Found`
+      },
+      {
+        id: 5,
+        name: "Case 5",
+        isPrivate: true,
+        stdin: `0`,
+        expectedOutput: `No Operation Performed`
+      }
+    ]
+  },
+  {
+    id: 11,
     name: "Custom / Blank",
     description: "", // Dynamically updated per language
     code: "",
@@ -2139,7 +2567,7 @@ function setFontSize(newSize) {
 
 // ---- Dynamic Question Description Generator ----
 function getQuestionDescription(q) {
-  if (q.name === "Custom / Blank" || q.id === 9) {
+  if (q.name === "Custom / Blank" || q.id === 11) {
     if (currentLanguage === "python") {
       return `<h3>Custom Python OOP Program</h3>
 <p>Write your own Python Object-Oriented Program from scratch!</p>
@@ -2568,11 +2996,9 @@ function renderTemplateList() {
     const item = document.createElement("div");
     item.className = `template-item${q.id === currentQuestionId ? " active" : ""}`;
     item.dataset.id = q.id;
-    item.innerHTML = `
-      <span class="template-number">${q.id}.</span>
-      <span class="template-name">${q.name}</span>
-      ${q.id === 8 ? '<span style="font-size: 0.65rem; font-weight: 800; color: #ffb86c; background: rgba(255, 184, 108, 0.22); border: 1px solid rgba(255, 184, 108, 0.45); padding: 1px 6px; border-radius: 4px; margin-left: 6px; letter-spacing: 0.03em;">NEW FORMAT</span>' : ''}
-    `;
+    item.title = `${q.id}. ${q.name}`;
+    const label = q.name === "Custom / Blank" ? "Custom" : `Q${q.id}`;
+    item.innerHTML = `<span class="template-number">${label}</span>`;
     item.addEventListener("click", () => loadQuestion(q.id));
     templateListEl.appendChild(item);
   });

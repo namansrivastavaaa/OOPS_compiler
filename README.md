@@ -64,8 +64,10 @@ If you don't want to run the server locally:
 | **5** | **Insurance Class** | Premium Accumulation, Tenure Thresholds |
 | **6** | **Coffee Class** | Average Price Math, Edge Case Collections |
 | **7** | **Employee & Manager** | **Inheritance**, `super` Constructor, Method Overriding |
-| **8** | **Product Management** | **Newer Format**: Command-driven Operations, Service Architecture |
-| **9** | **Custom / Blank** | Freeform scratchpad for any custom Java / Python OOP code |
+| **8** | **Product Management** | Command-driven Operations, Service Architecture, Weighted Rating |
+| **9** | **Book Management** | Command-driven Operations, Service Architecture, Genre Filtering |
+| **10** | **Course Management** | Command-driven Operations, Service Architecture, Department Metrics |
+| **11** | **Custom / Blank** | Freeform scratchpad for any custom Java / Python OOP code |
 
 ---
 
